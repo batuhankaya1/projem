@@ -11,9 +11,6 @@ import { content, organization, media, pageKeys, type Language, type PageKey, ty
 function Mark({ className = '' }: { className?: string }) {
   return <svg className={`mark ${className}`} viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M5 33C14 33 6 13 17 13S21 35 30 34 29 11 43 11" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" /></svg>;
 }
-function InstagramMark() {
-  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.7" r=".8" fill="currentColor" stroke="none"/></svg>;
-}
 function Eyebrow({ children }: { children: React.ReactNode }) { return <p className="eyebrow">{children}</p>; }
 function Header({ lang, page, c }: { lang: Language; page?: PageKey; c: Copy }) {
   const [menu, setMenu] = useState(false);
@@ -162,33 +159,6 @@ function Story({ c, lang }: { c: Copy; lang: Language }) {
   </section>;
 }
 
-const socialImagePositions = ['0% 0%','50% 0%','100% 0%','0% 100%','50% 100%','100% 100%'];
-function SocialPrototype({ lang }: { lang: Language }) {
-  const [active, setActive] = useState<number | null>(null);
-  const posts = lang === 'tr' ? [
-    { type: 'ATÖLYE', caption: 'Birlikte düşünmek, birlikte üretmenin ilk adımı.' },
-    { type: 'SAHADA', caption: 'Toprağa dokunan küçük bir adım.' },
-    { type: 'ETKİNLİK', caption: 'Bir buluşma başlamadan hemen önce.' },
-    { type: 'ÜRETİM', caption: 'Fikirlerin biçim kazandığı masa.' },
-    { type: 'BULUŞMA', caption: 'Sözün dolaşıma girdiği an.' },
-    { type: 'EKİP', caption: 'Günün sonunda aynı karede.' },
-  ] : [
-    { type: 'WORKSHOP', caption: 'Thinking together is the first step toward creating together.' },
-    { type: 'IN THE FIELD', caption: 'A small step that touches the earth.' },
-    { type: 'EVENT', caption: 'The moment just before a gathering begins.' },
-    { type: 'MAKING', caption: 'Where ideas begin to take form.' },
-    { type: 'ENCOUNTER', caption: 'The moment a conversation starts to travel.' },
-    { type: 'TEAM', caption: 'Together in one frame at the end of the day.' },
-  ];
-  const selected = active === null ? null : posts[active];
-  return <section className="social-prototype" aria-labelledby="social-prototype-title">
-    <header className="social-prototype-head"><div><p>{lang === 'tr' ? 'SAHADAN · SOSYAL AKIŞ PROTOTİPİ' : 'FROM THE FIELD · SOCIAL FEED PROTOTYPE'}</p><h2 id="social-prototype-title">{lang === 'tr' ? <>Son paylaşımlar,<br/><em>Projem’in içinden.</em></> : <>Recent posts,<br/><em>from inside Projem.</em></>}</h2></div><span className="social-account"><InstagramMark/>@projem</span></header>
-    <div className="social-prototype-grid">{posts.map((post, i) => <button key={i} className={`social-prototype-card social-prototype-card-${i}`} onClick={() => setActive(i)} aria-label={`${post.type}: ${post.caption}`}><span className="social-prototype-image" style={{ backgroundPosition: socialImagePositions[i] }}/><span className="social-prototype-overlay"><span>0{i+1} / {post.type}</span><strong>{post.caption}</strong><ArrowUpRight aria-hidden="true"/></span></button>)}</div>
-    <div className="social-prototype-foot"><span>{lang === 'tr' ? 'ÖRNEK İÇERİK · GERÇEK HESAPLA GÜNCELLENECEK' : 'SAMPLE CONTENT · TO BE UPDATED WITH THE LIVE ACCOUNT'}</span><span>01 — 06</span></div>
-    <Dialog open={active !== null} onOpenChange={(open) => { if (!open) setActive(null); }}><DialogContent className="social-post-dialog" showCloseButton={false}>{selected && <><div className="social-dialog-image social-prototype-image" style={{ backgroundPosition: socialImagePositions[active ?? 0] }}/><div className="social-dialog-copy"><div className="social-dialog-top"><span><InstagramMark/>@projem</span><Button variant="ghost" size="icon" aria-label={lang === 'tr' ? 'Kapat' : 'Close'} onClick={() => setActive(null)}><X/></Button></div><DialogTitle>{selected.caption}</DialogTitle><DialogDescription>{lang === 'tr' ? 'Bu prototip alanı gerçek gönderiler bağlandığında paylaşım açıklamasını, tarihini ve Instagram bağlantısını gösterecek.' : 'When the live account is connected, this prototype area will show the post caption, date and Instagram link.'}</DialogDescription><span className="social-dialog-tag">{selected.type} · {lang === 'tr' ? 'ÖRNEK GÖNDERİ' : 'SAMPLE POST'}</span></div></>}</DialogContent></Dialog>
-  </section>;
-}
-
 function Program({ c, expanded = false, lang }: { c: Copy; expanded?: boolean; lang: Language }) {
   const Heading = expanded ? 'h1' : 'h2';
   return <section className={`program-section section-pad ${expanded ? 'expanded-program' : ''}`} aria-labelledby="program-title"><div className="section-heading"><div><Eyebrow>{c.programEyebrow}</Eyebrow><Heading id="program-title">{c.programTitle}</Heading></div>{!expanded && <Link className="text-link" href={`/${lang}/program`}>{c.programMore}<ArrowUpRight size={18}/></Link>}</div>{expanded && <p className="section-intro">{c.programIntro}</p>}<div className="program-grid">{c.programs.map((p,i)=><article className="program-item" key={p.title}><div className="program-meta"><span>0{i+1}</span><span>{p.tag}</span></div><div className={`program-diagram diagram-${i}`} aria-hidden="true"><svg viewBox="0 0 300 100" fill="none">{i===0 ? <><path d="M30 70H270M65 70C80 10 135 10 150 70C165 10 220 10 235 70"/><circle cx="150" cy="70" r="6"/></> : i===1 ? <><path d="M35 50H265M100 15V85M150 15V85M200 15V85"/><circle cx="150" cy="50" r="13"/></> : <><path d="M70 70L150 20L230 70H70L150 20M150 20V80"/><circle cx="70" cy="70" r="6"/><circle cx="150" cy="20" r="6"/><circle cx="230" cy="70" r="6"/></>}</svg></div><h3>{p.title}</h3><p>{expanded ? p.detail : p.text}</p></article>)}</div><p className="draft-note">{c.draft}</p></section>;
@@ -215,5 +185,5 @@ export function YouthSite({ lang, page }: { lang: Language; page?: PageKey }) {
   const [allowed,setAllowed]=useState(() => { try { return typeof window !== 'undefined' && localStorage.getItem('living-line-social')==='allowed'; } catch { return false; } }); const [privacy,setPrivacy]=useState(false);
   useEffect(()=> { document.documentElement.lang=lang; },[lang]);
   const toggleConsent=()=>setAllowed(previous=> {const next=!previous; try{localStorage.setItem('living-line-social',next?'allowed':'blocked');}catch{} return next;});
-  return <div id="top" className="site-shell"><Header c={c} lang={lang} page={page}/><main id="main" tabIndex={-1}>{page ? <Detail page={page} lang={lang} c={c}/> : <><Story c={c} lang={lang}/><SocialPrototype lang={lang}/></>}</main>{page && <Footer c={c} lang={lang} page={page} openPrivacy={()=>setPrivacy(true)}/>}<Dialog open={privacy} onOpenChange={setPrivacy}><DialogContent className="privacy-dialog" showCloseButton={false}><div className="privacy-heading"><Mark/><Button variant="ghost" size="icon" aria-label={c.close} onClick={()=>setPrivacy(false)}><X/></Button></div><DialogTitle>{c.privacyTitle}</DialogTitle><DialogDescription>{c.privacyText}</DialogDescription><p role="status" className="privacy-status">{allowed ? c.privacyAllowed : c.privacyBlocked}</p><Button className="primary-action" onClick={toggleConsent}>{allowed ? c.socialRevoke : c.socialConsent}</Button></DialogContent></Dialog></div>;
+  return <div id="top" className="site-shell"><Header c={c} lang={lang} page={page}/><main id="main" tabIndex={-1}>{page ? <Detail page={page} lang={lang} c={c}/> : <Story c={c} lang={lang}/>}</main>{page && <Footer c={c} lang={lang} page={page} openPrivacy={()=>setPrivacy(true)}/>}<Dialog open={privacy} onOpenChange={setPrivacy}><DialogContent className="privacy-dialog" showCloseButton={false}><div className="privacy-heading"><Mark/><Button variant="ghost" size="icon" aria-label={c.close} onClick={()=>setPrivacy(false)}><X/></Button></div><DialogTitle>{c.privacyTitle}</DialogTitle><DialogDescription>{c.privacyText}</DialogDescription><p role="status" className="privacy-status">{allowed ? c.privacyAllowed : c.privacyBlocked}</p><Button className="primary-action" onClick={toggleConsent}>{allowed ? c.socialRevoke : c.socialConsent}</Button></DialogContent></Dialog></div>;
 }
