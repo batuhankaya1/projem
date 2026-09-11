@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, ArrowUp, Menu, X } from 'lucide-react';
+import { ArrowUpRight, ArrowUp, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription, SheetClose } from '@/components/ui/sheet';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
@@ -15,16 +15,24 @@ function Eyebrow({ children }: { children: React.ReactNode }) { return <p classN
 function Header({ lang, page, c }: { lang: Language; page?: PageKey; c: Copy }) {
   const [menu, setMenu] = useState(false);
   function remember(language: Language) { try { localStorage.setItem('living-line-language', language); } catch {} }
+  const menuPath = 'M 55 520 C 180 520 150 205 340 205 C 505 205 435 565 655 515 C 835 475 735 135 930 120 C 1085 108 1055 430 1205 355 C 1305 305 1280 120 1380 82';
   return <>
     <a className="skip-link" href="#main">{c.skipNav}</a>
-    <header className="site-header">
-      <Link href={`/${lang}`} className="brand" aria-label={`${c.name} — ${c.home}`}><Mark /><span>{c.name}<small>{c.descriptor}</small></span></Link>
-      <nav className="desktop-nav" aria-label={lang === 'tr' ? 'Ana menü' : 'Main navigation'}>
-        {pageKeys.map((key, i) => <Link key={key} href={`/${lang}/${key}`} aria-current={page === key ? 'page' : undefined}>{c.nav[i]}</Link>)}
-      </nav>
-      <div className="header-end"><nav className="language-switch" aria-label="Dil / Language">{(['tr', 'en'] as Language[]).map(language => <Link key={language} href={`/${language}${page ? `/${page}` : ''}`} onClick={() => remember(language)} hrefLang={language} lang={language} aria-current={lang === language ? 'true' : undefined}>{language.toUpperCase()}</Link>)}</nav>
-        <Sheet open={menu} onOpenChange={setMenu}><SheetTrigger asChild><Button className="menu-toggle" variant="ghost" size="icon" aria-label={c.menu}><Menu /></Button></SheetTrigger><SheetContent className="mobile-sheet" showCloseButton={false}><div className="sheet-top"><Mark /><SheetClose asChild><Button variant="ghost" size="icon" aria-label={c.close}><X /></Button></SheetClose></div><SheetTitle>{c.name}</SheetTitle><SheetDescription>{c.footer}</SheetDescription><nav className="mobile-nav">{pageKeys.map((key, i) => <Link key={key} href={`/${lang}/${key}`} onClick={() => setMenu(false)} aria-current={page === key ? 'page' : undefined}><span>0{i+1}</span>{c.nav[i]}<ArrowUpRight /></Link>)}</nav></SheetContent></Sheet>
-      </div>
+    <header className="site-header route-header">
+      <Link href={`/${lang}`} className="brand route-brand" aria-label={`${c.name} — ${c.home}`}><Mark /><span>{c.name}<small>{c.descriptor}</small></span></Link>
+      <Sheet open={menu} onOpenChange={setMenu}>
+        <SheetTrigger asChild><button className="route-menu-trigger" aria-label={c.menu}><span>{lang === 'tr' ? 'Rota' : 'Route'}</span><span className="route-menu-icon" aria-hidden="true"><i/><i/></span></button></SheetTrigger>
+        <SheetContent side="top" className="route-menu-sheet" showCloseButton={false}>
+          <div className="route-menu-head"><Link href={`/${lang}`} className="brand route-menu-brand" onClick={() => setMenu(false)}><Mark/><span>{c.name}<small>{c.descriptor}</small></span></Link><SheetClose asChild><button className="route-menu-close"><span>{c.close}</span><X/></button></SheetClose></div>
+          <SheetTitle className="route-menu-title">{lang === 'tr' ? 'Yolunu seç.' : 'Choose your path.'}</SheetTitle>
+          <SheetDescription className="route-menu-description">{c.footer}</SheetDescription>
+          <div className="route-menu-map">
+            <svg viewBox="0 0 1440 620" preserveAspectRatio="none" fill="none" aria-hidden="true"><path className="route-menu-guide" d={menuPath}/><path className="route-menu-path" pathLength="1" d={menuPath}/><circle className="route-menu-traveler" r="8"><animateMotion dur="8s" repeatCount="indefinite" path={menuPath}/></circle></svg>
+            <nav aria-label={lang === 'tr' ? 'Ana menü' : 'Main navigation'}>{pageKeys.map((key, i) => <Link key={key} className={`route-stop route-stop-${i}`} href={`/${lang}/${key}`} onClick={() => setMenu(false)} aria-current={page === key ? 'page' : undefined}><span>0{i+1}</span><strong>{c.nav[i]}</strong><i aria-hidden="true"/></Link>)}</nav>
+          </div>
+          <nav className="route-language" aria-label="Dil / Language">{(['tr', 'en'] as Language[]).map(language => <Link key={language} href={`/${language}${page ? `/${page}` : ''}`} onClick={() => { remember(language); setMenu(false); }} hrefLang={language} lang={language} aria-current={lang === language ? 'true' : undefined}>{language.toUpperCase()}</Link>)}</nav>
+        </SheetContent>
+      </Sheet>
     </header>
   </>;
 }
@@ -90,9 +98,8 @@ function Story({ c, lang }: { c: Copy; lang: Language }) {
     const section = journey.current;
     const sticky = frame.current;
     if (!section || !sticky) return;
-    const header = document.querySelector<HTMLElement>('.site-header')?.offsetHeight ?? 0;
     const travel = Math.max(1, section.offsetHeight - sticky.offsetHeight);
-    const top = section.getBoundingClientRect().top + window.scrollY - header;
+    const top = section.getBoundingClientRect().top + window.scrollY;
     window.scrollTo({ top: top + travel * (target / 4), behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   };
   useEffect(() => {
@@ -102,10 +109,9 @@ function Story({ c, lang }: { c: Copy; lang: Language }) {
       const section = journey.current;
       const sticky = frame.current;
       if (!section || !sticky) return;
-      const header = document.querySelector<HTMLElement>('.site-header')?.offsetHeight ?? 0;
       const rect = section.getBoundingClientRect();
       const travel = Math.max(1, section.offsetHeight - sticky.offsetHeight);
-      const nextProgress = Math.max(0, Math.min(1, (header - rect.top) / travel));
+      const nextProgress = Math.max(0, Math.min(1, -rect.top / travel));
       setProgress(nextProgress);
       setStep(Math.max(0, Math.min(4, Math.round(nextProgress * 4))));
     };
@@ -120,7 +126,7 @@ function Story({ c, lang }: { c: Copy; lang: Language }) {
       const section = journey.current;
       if (!section || document.querySelector('[role="dialog"]') || event.altKey || event.metaKey || event.ctrlKey) return;
       const rect = section.getBoundingClientRect();
-      const active = rect.top <= (document.querySelector<HTMLElement>('.site-header')?.offsetHeight ?? 0) + 2 && rect.bottom > window.innerHeight;
+      const active = rect.top <= 2 && rect.bottom > window.innerHeight;
       if (!active) return;
       const dir = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
       if (!dir) return;
