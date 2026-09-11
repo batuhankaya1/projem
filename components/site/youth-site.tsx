@@ -15,22 +15,29 @@ function Eyebrow({ children }: { children: React.ReactNode }) { return <p classN
 function Header({ lang, page, c }: { lang: Language; page?: PageKey; c: Copy }) {
   const [menu, setMenu] = useState(false);
   function remember(language: Language) { try { localStorage.setItem('living-line-language', language); } catch {} }
-  const menuPath = 'M 55 520 C 180 520 150 205 340 205 C 505 205 435 565 655 515 C 835 475 735 135 930 120 C 1085 108 1055 430 1205 355 C 1305 305 1280 120 1380 82';
+  const menuNotes = lang === 'tr'
+    ? ['Hikâyemiz ve yaklaşımımız', 'Projeler ve etkinlikler', 'Ekip ve gönüllüler', 'Kurumsal yapı', 'Birlikte çalışalım']
+    : ['Our story and approach', 'Projects and events', 'Team and volunteers', 'Institutional structure', 'Work with us'];
   return <>
     <a className="skip-link" href="#main">{c.skipNav}</a>
     <header className="site-header route-header">
       <Link href={`/${lang}`} className="brand route-brand" aria-label={`${c.name} — ${c.home}`}><Mark /><span>{c.name}<small>{c.descriptor}</small></span></Link>
       <Sheet open={menu} onOpenChange={setMenu}>
-        <SheetTrigger asChild><button className="route-menu-trigger" aria-label={c.menu}><span>{lang === 'tr' ? 'Rota' : 'Route'}</span><span className="route-menu-icon" aria-hidden="true"><i/><i/></span></button></SheetTrigger>
+        <SheetTrigger asChild><button className="route-menu-trigger" aria-label={c.menu}><span>{lang === 'tr' ? 'Menü' : 'Menu'}</span><span className="route-menu-icon" aria-hidden="true"><i/><i/></span></button></SheetTrigger>
         <SheetContent side="top" className="route-menu-sheet" showCloseButton={false}>
           <div className="route-menu-head"><Link href={`/${lang}`} className="brand route-menu-brand" onClick={() => setMenu(false)}><Mark/><span>{c.name}<small>{c.descriptor}</small></span></Link><SheetClose asChild><button className="route-menu-close"><span>{c.close}</span><X/></button></SheetClose></div>
-          <SheetTitle className="route-menu-title">{lang === 'tr' ? 'Yolunu seç.' : 'Choose your path.'}</SheetTitle>
-          <SheetDescription className="route-menu-description">{c.footer}</SheetDescription>
-          <div className="route-menu-map">
-            <svg viewBox="0 0 1440 620" preserveAspectRatio="none" fill="none" aria-hidden="true"><path className="route-menu-guide" d={menuPath}/><path className="route-menu-path" pathLength="1" d={menuPath}/><circle className="route-menu-traveler" r="8"><animateMotion dur="8s" repeatCount="indefinite" path={menuPath}/></circle></svg>
-            <nav aria-label={lang === 'tr' ? 'Ana menü' : 'Main navigation'}>{pageKeys.map((key, i) => <Link key={key} className={`route-stop route-stop-${i}`} href={`/${lang}/${key}`} onClick={() => setMenu(false)} aria-current={page === key ? 'page' : undefined}><span>0{i+1}</span><strong>{c.nav[i]}</strong><i aria-hidden="true"/></Link>)}</nav>
+          <SheetTitle className="sr-only">{lang === 'tr' ? 'Kurumsal indeks' : 'Institutional index'}</SheetTitle>
+          <SheetDescription className="sr-only">{c.footer}</SheetDescription>
+          <div className="corporate-index">
+            <section className="index-identity" aria-labelledby="index-vision-title">
+              <p className="index-kicker">{lang === 'tr' ? '2007’den beri · Gönüllülük esasıyla' : 'Since 2007 · Powered by volunteers'}</p>
+              <div className="index-vision" aria-hidden="true"><span>20.</span><i>→</i><span>25.</span></div>
+              <h2 id="index-vision-title">{lang === 'tr' ? '20. yıldan 25. yıl vizyonuna.' : 'From year 20 to our 25th-year vision.'}</h2>
+              <p>{lang === 'tr' ? 'Gönüllülükten doğan, deneyimiyle büyüyen ve geleceğe kurumsal bir yapı ile hazırlanan bir gençlik projesi.' : 'A volunteer-led youth project growing through experience and preparing for the future with a stronger institutional structure.'}</p>
+            </section>
+            <nav className="index-navigation" aria-label={lang === 'tr' ? 'Ana menü' : 'Main navigation'}>{pageKeys.map((key, i) => <Link key={key} className="index-row" href={`/${lang}/${key}`} onClick={() => setMenu(false)} aria-current={page === key ? 'page' : undefined} style={{ '--index-delay': `${i * 55}ms` } as CSSProperties}><span className="index-number">0{i+1}</span><span className="index-label"><strong>{c.nav[i]}</strong><small>{menuNotes[i]}</small></span><ArrowUpRight aria-hidden="true"/></Link>)}</nav>
           </div>
-          <nav className="route-language" aria-label="Dil / Language">{(['tr', 'en'] as Language[]).map(language => <Link key={language} href={`/${language}${page ? `/${page}` : ''}`} onClick={() => { remember(language); setMenu(false); }} hrefLang={language} lang={language} aria-current={lang === language ? 'true' : undefined}>{language.toUpperCase()}</Link>)}</nav>
+          <div className="index-footer"><span>{lang === 'tr' ? '2007 — 25. YIL VİZYONU' : '2007 — 25TH-YEAR VISION'}</span><nav className="route-language" aria-label="Dil / Language">{(['tr', 'en'] as Language[]).map(language => <Link key={language} href={`/${language}${page ? `/${page}` : ''}`} onClick={() => { remember(language); setMenu(false); }} hrefLang={language} lang={language} aria-current={lang === language ? 'true' : undefined}>{language.toUpperCase()}</Link>)}</nav></div>
         </SheetContent>
       </Sheet>
     </header>
