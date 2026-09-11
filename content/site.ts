@@ -3,7 +3,7 @@ export type PageKey = 'about' | 'program' | 'team' | 'trustees' | 'contact';
 export const languages: Language[] = ['tr', 'en'];
 export const pageKeys: PageKey[] = ['about', 'program', 'team', 'trustees', 'contact'];
 export const organization = {
-  name: '[PROJE ADI]', foundingYear: 2007,
+  name: 'Projem', foundingYear: 2007,
   email: '', address: '', instagram: '', x: '',
 };
 // Use approved local images (for example /images/archive-2007.webp) and meaningful alt text.
@@ -16,14 +16,13 @@ export const media = {
 };
 export const content = {
   tr: {
-    name: '[PROJE ADI]', descriptor: 'BİR GENÇLİK HİKÂYESİ',
+    name: 'Projem', descriptor: 'BİR GENÇLİK HİKÂYESİ',
     title: '2007’den bugüne, birlikte.', description: '2007’den beri devam eden bir gençlik çalışması. Geçmişten bugüne hikâyemizi ve programımızı keşfedin.',
     nav: ['Biz Kimiz', 'Programımız', 'Yönetim', 'Mütevelli Heyeti', 'İletişim'],
     menu: 'Menüyü aç', close: 'Kapat', home: 'Ana sayfa', skipNav: 'Ana içeriğe geç',
     since: '2007’DEN BERİ', journey: 'BİR FİKİRDEN, BİR GELECEĞE',
     discover: 'Hikâyeyi keşfet', skip: 'Doğrudan içeriğe geç', skipStory: 'Hikâyeyi atla',
     previous: 'Önceki sahne', next: 'Sonraki sahne', today: 'Bugünü keşfet',
-    scrollHint: 'Kaydırdıkça yolculuk ilerler', swipeHint: 'Kaydırdıkça yolculuk ilerler',
     storyLabel: '2007’den bugüne hikâyemiz', sceneLabel: 'Sahne', graphic: '2007’de tek bir noktadan başlayıp bir topluluk ağına dönüşen çizgi.',
     archive: 'YAŞAYAN ARŞİV', visualNote: 'SOYUT ANLATI / ARŞİV GÖRSELLERİ BEKLENİYOR',
     origin: 'İlk adım', future: 'Birlikte, ileriye',
@@ -35,7 +34,7 @@ export const content = {
       { year: 'Bugün', period: 'HİKÂYE DEVAM EDİYOR', title: ['Gelecek,', 'birlikte', 'çizdiğimiz yer.'], body: '2007’den bugüne uzanan bu çizgi hâlâ açık. Yeni fikirler, yeni karşılaşmalar ve birlikte atılacak adımlar için.', label: 'Bugün', note: 'Sıradaki çizgiyi,\nbirlikte çizelim.', stamp: 'DEVAM EDİYOR' },
     ],
     aboutEyebrow: 'BİZ KİMİZ?', aboutTitle: 'Gençlerle.\nGençler için.\nBirlikte.',
-    aboutBody: '[PROJE ADI], 2007’den beri devam eden bir gençlik çalışmasıdır. Gençlerin öğrenmesine, birlikte üretmesine ve topluluk içinde yer bulmasına odaklanan bir deneyim için çalışır.',
+    aboutBody: 'Projem, 2007’den beri devam eden bir gençlik çalışmasıdır. Gençlerin öğrenmesine, birlikte üretmesine ve topluluk içinde yer bulmasına odaklanan bir deneyim için çalışır.',
     aboutMore: 'Bizi daha yakından tanı', draft: 'Örnek anlatım · Kurumsal içerikle güncellenecek',
     programEyebrow: 'PROGRAMIMIZ', programTitle: 'Meraktan harekete.', programIntro: 'Birbirini besleyen üç alan. Gençlerin kendi yolunu bulmasına açılan bir program.', programMore: 'Programı keşfet',
     programs: [
@@ -58,12 +57,12 @@ export const content = {
     privacyTitle: 'Gizlilik tercihleriniz', privacyText: 'Dil seçiminiz ve sosyal medya izniniz yalnızca bu tarayıcıda saklanır. Analitik veya reklam çerezi kullanılmaz. Sosyal içeriklere izin verdiğinizde Instagram ve X kendi gizlilik politikaları kapsamında veri işleyebilir.', privacyAllowed: 'Harici sosyal içerikler: açık', privacyBlocked: 'Harici sosyal içerikler: kapalı',
   },
   en: {
-    name: '[PROJECT NAME]', descriptor: 'A YOUTH STORY',
+    name: 'Projem', descriptor: 'A YOUTH STORY',
     title: 'Together, since 2007.', description: 'A youth initiative active since 2007. Discover our story, our community and our programme.',
     nav: ['About Us', 'Our Programme', 'Management', 'Board of Trustees', 'Contact'],
     menu: 'Open menu', close: 'Close', home: 'Home', skipNav: 'Skip to main content',
     since: 'SINCE 2007', journey: 'FROM AN IDEA TO A FUTURE', discover: 'Explore the story', skip: 'Go straight to content', skipStory: 'Skip the story',
-    previous: 'Previous scene', next: 'Next scene', today: 'Explore today', scrollHint: 'Scroll to travel through the story', swipeHint: 'Scroll to travel through the story',
+    previous: 'Previous scene', next: 'Next scene', today: 'Explore today',
     storyLabel: 'Our story, from 2007 to today', sceneLabel: 'Scene', graphic: 'A line starting at a single point in 2007 and becoming a community network.',
     archive: 'A LIVING ARCHIVE', visualNote: 'ABSTRACT NARRATIVE / ARCHIVE IMAGES TO FOLLOW', origin: 'The first step', future: 'Forward, together',
     scenes: [
@@ -73,7 +72,7 @@ export const content = {
       { year: '03', period: 'A GROWING COMMUNITY', title: ['We connected.', 'And found', 'strength in it.'], body: 'Every encounter brings another voice to the story. Our third community milestone will find its place here.', label: 'Community', note: 'Different stories.\nA shared path.', stamp: 'COMMUNITY', placeholder: '[MILESTONE 3 · YEAR]' },
       { year: 'Today', period: 'THE STORY CONTINUES', title: ['The future', 'is a line', 'we draw together.'], body: 'The line we started in 2007 is still open. For fresh ideas, new encounters and the steps we will take together.', label: 'Today', note: 'Let’s draw\nthe next line together.', stamp: 'TO BE CONTINUED' },
     ],
-    aboutEyebrow: 'WHO ARE WE?', aboutTitle: 'With young people.\nFor young people.\nTogether.', aboutBody: '[PROJECT NAME] is a youth initiative active since 2007. We work towards an experience where young people can learn, create together and find their place in a community.', aboutMore: 'Get to know us', draft: 'Sample copy · To be updated with approved content',
+    aboutEyebrow: 'WHO ARE WE?', aboutTitle: 'With young people.\nFor young people.\nTogether.', aboutBody: 'Projem is a youth initiative active since 2007. We work towards an experience where young people can learn, create together and find their place in a community.', aboutMore: 'Get to know us', draft: 'Sample copy · To be updated with approved content',
     programEyebrow: 'OUR PROGRAMME', programTitle: 'From curiosity to action.', programIntro: 'Three connected areas. A programme that makes room for young people to find their own path.', programMore: 'Explore the programme',
     programs: [
       { title: 'Learn together', text: 'Encounters, workshops and exchanges that welcome questions.', detail: 'Workshops and shared learning shaped around young people’s interests. Dates, eligibility and approved programme details will be added.', tag: 'CURIOSITY & DISCOVERY' },
