@@ -29,11 +29,18 @@ function Header({ lang, page, c }: { lang: Language; page?: PageKey; c: Copy }) 
   </>;
 }
 
-const journeyPath = 'M 28 420 C 96 420 72 278 132 272 C 207 264 151 478 266 443 C 365 413 275 198 367 157 C 432 128 435 261 479 222 C 525 181 478 65 558 64';
+const journeyPath = 'M -90 760 C 165 760 130 470 355 470 C 585 470 430 830 720 760 C 965 700 770 255 1010 215 C 1205 182 1215 540 1375 380 C 1510 245 1400 72 1690 58';
+const journeyNodes = [[-35,760],[355,470],[720,760],[1010,215],[1375,380],[1645,66]];
+const visualPositions = [
+  { left: 59, top: 10, rotate: -5 },
+  { left: 76, top: 49, rotate: 4 },
+  { left: 48, top: 63, rotate: -3 },
+  { left: 80, top: 9, rotate: 5 },
+  { left: 62, top: 35, rotate: -4 },
+];
 
 function LivingLine({ step, progress, c, lang }: { step: number; progress: number; c: Copy; lang: Language }) {
   const scene = c.scenes[step];
-  const asset = media.story[step];
   const pathRef = useRef<SVGPathElement>(null);
   const vehicleRef = useRef<SVGGElement>(null);
   const rawStep = progress * 4;
@@ -48,17 +55,26 @@ function LivingLine({ step, progress, c, lang }: { step: number; progress: numbe
     const angle = Math.atan2(next.y - point.y, next.x - point.x) * 180 / Math.PI;
     vehicle.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${angle})`);
   }, [progress]);
-  return <div className={`living-art art-step-${step}`} style={{ '--journey-progress': progress } as CSSProperties} role="img" aria-label={asset.src ? asset.alt[lang] : `${c.graphic} ${scene.period}`}>
-    {asset.src && <img className="archive-photo" src={asset.src} alt="" width={600} height={560} fetchPriority={step === 0 ? "high" : "auto"} />}
+  return <div className={`living-art art-step-${step}`} style={{ '--journey-progress': progress } as CSSProperties} role="img" aria-label={`${c.graphic} ${scene.period}`}>
     <div className="art-years" aria-hidden="true">{c.scenes.map((item, i) => { const opacity = Math.max(0, 1 - Math.abs(rawStep - i) * 1.7); return <span key={i} className={`art-year ${i === 4 ? 'art-year-today' : ''}`} style={{ opacity, filter: `blur(${(1-opacity) * 3}px)`, transform: `translate3d(${(i - rawStep) * 22}px, ${(i - rawStep) * 12}px, 0) scale(${1 + progress * .06})` }}>{item.year}</span> })}</div>
-    <svg className="line-diagram" viewBox="0 0 600 510" fill="none" aria-hidden="true">
-      <path d="M28 410H565M132 35V468M367 35V468" className="construction-line" />
+    <div className="journey-visuals" aria-hidden="true">{media.story.map((item, i) => {
+      const delta = i - rawStep;
+      const distance = Math.abs(delta);
+      const reveal = Math.max(0, Math.min(1, progress * 11));
+      const opacity = reveal * Math.max(0, 1 - distance * .52);
+      const position = visualPositions[i];
+      return <div key={i} className={`journey-visual journey-visual-${i}`} style={{ left: `${position.left}%`, top: `${position.top}%`, opacity, transform: `translate3d(${delta * 27}vw, ${delta * -4}vh, 0) rotate(${position.rotate + delta * 2}deg) scale(${.82 + Math.max(0, 1 - distance) * .18})` }}>
+        {item.src ? <img src={item.src} alt={item.alt[lang]} width={520} height={680} loading={i === 0 ? 'eager' : 'lazy'} /> : <svg viewBox="0 0 320 420" fill="none"><path d={i % 2 ? 'M-30 325C72 218 98 462 204 320S334 120 375 58' : 'M-35 352C54 350 49 155 137 154S190 335 286 250 290 61 362 44'} /><circle cx={i % 2 ? 102 : 237} cy={i % 2 ? 152 : 116} r={i % 2 ? 52 : 68} /><path d="M34 42H286M34 378H286" /></svg>}
+      </div>;
+    })}</div>
+    <svg className="line-diagram" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true">
+      <path d="M0 770H1600M355 35V865M1010 35V865M1375 35V865" className="construction-line" />
       <path d={journeyPath} className="route-base" />
       <path ref={pathRef} d={journeyPath} pathLength="1" className="living-path" style={{ strokeDashoffset: 1 - progress }} />
-      <g className="network-lines" style={{ opacity: Math.max(0, (progress - .18) * 1.5) }}><path d="M132 272L367 157M266 443L479 222M132 272L266 443L367 157L479 222M266 443L558 64M28 420L367 157L558 64" /></g>
-      {[[28,420],[132,272],[266,443],[367,157],[479,222],[558,64]].map(([x,y],i)=><g key={i} className="route-node" style={{ opacity: Math.max(.16, Math.min(1, progress * 5 - i * .72)) }}><circle cx={x} cy={y} r="10" fill="var(--art-bg)"/><circle cx={x} cy={y} r="5" fill="var(--orange)"/></g>)}
+      <g className="network-lines" style={{ opacity: Math.max(0, (progress - .18) * 1.5) }}><path d="M355 470L1010 215M720 760L1375 380M355 470L720 760L1010 215L1375 380M720 760L1645 66M-35 760L1010 215L1645 66" /></g>
+      {journeyNodes.map(([x,y],i)=><g key={i} className="route-node" style={{ opacity: Math.max(.16, Math.min(1, progress * 5 - i * .72)) }}><circle cx={x} cy={y} r="17" fill="var(--art-bg)"/><circle cx={x} cy={y} r="8" fill="var(--orange)"/></g>)}
       <g ref={vehicleRef} className="journey-vehicle"><circle r="14"/><path d="M-5-6 7 0-5 6Z" /></g>
-      <path d="M235 243C269 243 236 185 270 185S288 260 321 255 317 180 358 180" className="final-mark" style={{ opacity: Math.max(0, (progress - .82) * 5.5) }} />
+      <path d="M1285 224C1360 224 1285 122 1360 122S1400 255 1470 245 1460 112 1545 112" className="final-mark" style={{ opacity: Math.max(0, (progress - .82) * 5.5) }} />
     </svg>
   </div>;
 }
