@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, ArrowRight, ArrowLeft, ArrowUp, Menu, X } from 'lucide-react';
+import { ArrowUpRight, ArrowUp, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription, SheetClose } from '@/components/ui/sheet';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
@@ -141,7 +141,6 @@ function Story({ c, lang }: { c: Copy; lang: Language }) {
         </div>})}</div>
         <LivingLine step={step} progress={progress} c={c} lang={lang}/>
       </div>
-      <div className="story-controls"><Button variant="ghost" className="round-button" size="icon" disabled={step === 0} onClick={()=>scrollToStep(step-1)} aria-label={c.previous}><ArrowLeft /></Button><Button variant="ghost" className="round-button" size="icon" disabled={step === 4} onClick={()=>scrollToStep(step+1)} aria-label={c.next}><ArrowRight /></Button></div>
     </div>
     <div className="story-transcript">{c.scenes.map((scene,i)=><article key={i}><p className="scene-period"><span>{String(i+1).padStart(2,'0')}</span> {scene.period}</p><h2>{scene.title.join(' ')}</h2><p>{scene.body}</p></article>)}</div>
   </section>;
