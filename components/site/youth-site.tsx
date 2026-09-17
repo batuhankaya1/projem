@@ -11,13 +11,19 @@ import { content, organization, media, pageKeys, type Language, type PageKey, ty
 function Mark({ className = '' }: { className?: string }) {
   return <svg className={`mark ${className}`} viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M5 33C14 33 6 13 17 13S21 35 30 34 29 11 43 11" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" /></svg>;
 }
-function Eyebrow({ children }: { children: React.ReactNode }) { return <p className="eyebrow">{children}</p>; }
+function InstagramMark() {
+  return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>;
+}
+function XMark() {
+  return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4.5 19 19.5M19 4.5 5 19.5"/></svg>;
+}
+const menuPageKeys: PageKey[] = ['about', 'team', 'contact'];
 function Header({ lang, page, c }: { lang: Language; page?: PageKey; c: Copy }) {
   const [menu, setMenu] = useState(false);
   function remember(language: Language) { try { localStorage.setItem('living-line-language', language); } catch {} }
   const menuNotes = lang === 'tr'
-    ? ['Hikâyemiz ve yaklaşımımız', 'Projeler ve etkinlikler', 'Ekip ve gönüllüler', 'Kurumsal yapı', 'Birlikte çalışalım']
-    : ['Our story and approach', 'Projects and events', 'Team and volunteers', 'Institutional structure', 'Work with us'];
+    ? ['Hikâyemiz ve yaklaşımımız', 'Ekip ve gönüllüler', 'Birlikte çalışalım']
+    : ['Our story and approach', 'Team and volunteers', 'Work with us'];
   return <>
     <a className="skip-link" href="#main">{c.skipNav}</a>
     <header className="site-header route-header">
@@ -35,7 +41,7 @@ function Header({ lang, page, c }: { lang: Language; page?: PageKey; c: Copy }) 
               <h2 id="index-vision-title">{lang === 'tr' ? '20. yıldan 25. yıl vizyonuna.' : 'From year 20 to our 25th-year vision.'}</h2>
               <p>{lang === 'tr' ? 'Gönüllülükten doğan, deneyimiyle büyüyen ve geleceğe kurumsal bir yapı ile hazırlanan bir gençlik projesi.' : 'A volunteer-led youth project growing through experience and preparing for the future with a stronger institutional structure.'}</p>
             </section>
-            <nav className="index-navigation" aria-label={lang === 'tr' ? 'Ana menü' : 'Main navigation'}>{pageKeys.map((key, i) => <Link key={key} className="index-row" href={`/${lang}/${key}`} onClick={() => setMenu(false)} aria-current={page === key ? 'page' : undefined} style={{ '--index-delay': `${i * 55}ms` } as CSSProperties}><span className="index-number">0{i+1}</span><span className="index-label"><strong>{c.nav[i]}</strong><small>{menuNotes[i]}</small></span><ArrowUpRight aria-hidden="true"/></Link>)}</nav>
+            <nav className="index-navigation" aria-label={lang === 'tr' ? 'Ana menü' : 'Main navigation'}>{menuPageKeys.map((key, i) => { const copyIndex = pageKeys.indexOf(key); return <Link key={key} className="index-row" href={`/${lang}/${key}`} onClick={() => setMenu(false)} aria-current={page === key ? 'page' : undefined} style={{ '--index-delay': `${i * 55}ms` } as CSSProperties}><span className="index-number">0{i+1}</span><span className="index-label"><strong>{c.nav[copyIndex]}</strong><small>{menuNotes[i]}</small></span><ArrowUpRight aria-hidden="true"/></Link> })}</nav>
           </div>
           <div className="index-footer"><span>{lang === 'tr' ? '2007 — 25. YIL VİZYONU' : '2007 — 25TH-YEAR VISION'}</span><nav className="route-language" aria-label="Dil / Language">{(['tr', 'en'] as Language[]).map(language => <Link key={language} href={`/${language}${page ? `/${page}` : ''}`} onClick={() => { remember(language); setMenu(false); }} hrefLang={language} lang={language} aria-current={lang === language ? 'true' : undefined}>{language.toUpperCase()}</Link>)}</nav></div>
         </SheetContent>
@@ -159,31 +165,45 @@ function Story({ c, lang }: { c: Copy; lang: Language }) {
   </section>;
 }
 
-function Program({ c, expanded = false, lang }: { c: Copy; expanded?: boolean; lang: Language }) {
-  const Heading = expanded ? 'h1' : 'h2';
-  return <section className={`program-section section-pad ${expanded ? 'expanded-program' : ''}`} aria-labelledby="program-title"><div className="section-heading"><div><Eyebrow>{c.programEyebrow}</Eyebrow><Heading id="program-title">{c.programTitle}</Heading></div>{!expanded && <Link className="text-link" href={`/${lang}/program`}>{c.programMore}<ArrowUpRight size={18}/></Link>}</div>{expanded && <p className="section-intro">{c.programIntro}</p>}<div className="program-grid">{c.programs.map((p,i)=><article className="program-item" key={p.title}><div className="program-meta"><span>0{i+1}</span><span>{p.tag}</span></div><div className={`program-diagram diagram-${i}`} aria-hidden="true"><svg viewBox="0 0 300 100" fill="none">{i===0 ? <><path d="M30 70H270M65 70C80 10 135 10 150 70C165 10 220 10 235 70"/><circle cx="150" cy="70" r="6"/></> : i===1 ? <><path d="M35 50H265M100 15V85M150 15V85M200 15V85"/><circle cx="150" cy="50" r="13"/></> : <><path d="M70 70L150 20L230 70H70L150 20M150 20V80"/><circle cx="70" cy="70" r="6"/><circle cx="150" cy="20" r="6"/><circle cx="230" cy="70" r="6"/></>}</svg></div><h3>{p.title}</h3><p>{expanded ? p.detail : p.text}</p></article>)}</div><p className="draft-note">{c.draft}</p></section>;
+const programCards = {
+  tr: [
+    { title: 'Dersler', detail: 'Yıl boyunca düzenli öğrenme ve paylaşım buluşmaları.' },
+    { title: 'Kamplar', detail: 'Birlikte yaşama, üretme ve dayanışma deneyimi.' },
+    { title: 'Hitabet', detail: 'Düşünceyi açık, güçlü ve sorumlu biçimde ifade etme çalışmaları.' },
+    { title: 'Türkiye Gezisi', detail: 'Farklı şehirleri, kültürleri ve hikâyeleri yerinde tanıma yolculuğu.' },
+  ],
+  en: [
+    { title: 'Classes', detail: 'Regular learning and exchange sessions throughout the year.' },
+    { title: 'Camps', detail: 'An experience of living, creating and sharing together.' },
+    { title: 'Public Speaking', detail: 'Learning to express ideas with clarity, confidence and responsibility.' },
+    { title: 'Türkiye Journey', detail: 'Discovering different cities, cultures and stories first-hand.' },
+  ],
+};
+
+function StatsBar({ lang }: { lang: Language }) {
+  return <section className="stats-bar" aria-labelledby="stats-title"><div className="stats-heading"><span>01</span><h2 id="stats-title">{lang === 'tr' ? 'Sayılarla Projem' : 'Projem in numbers'}</h2></div><dl><div><dt>{lang === 'tr' ? 'Güncel mezun' : 'Current alumni'}</dt><dd>110</dd></div><div><dt>{lang === 'tr' ? 'Güncel mensup' : 'Current members'}</dt><dd>40</dd></div></dl></section>;
+}
+
+function ProgramsShowcase({ lang }: { lang: Language }) {
+  const cards = programCards[lang];
+  const cardGroup = (hidden = false) => <div className="program-film-group" aria-hidden={hidden || undefined}>{cards.map((program, i) => <article className="program-card" key={`${hidden ? 'duplicate-' : ''}${program.title}`}><div className={`program-card-image program-image-${i}`} role="img" aria-label={program.title}/><div className="program-card-copy"><div className="program-card-meta"><span>{String(i + 1).padStart(2, '0')}</span><span>{lang === 'tr' ? 'YILLIK PROGRAM' : 'ANNUAL PROGRAMME'}</span></div><h3>{program.title}</h3><p>{program.detail}</p></div></article>)}</div>;
+  return <section className="programs-showcase" aria-labelledby="programs-title"><header className="programs-heading"><div><span>02 / 04</span><h2 id="programs-title">{lang === 'tr' ? 'Programlarımız' : 'Our programmes'}</h2></div><p>{lang === 'tr' ? 'Yıl boyunca, birlikte.' : 'Together, throughout the year.'}</p></header><div className="program-film" aria-label={lang === 'tr' ? 'Programlar' : 'Programmes'}><div className="program-film-track">{cardGroup()}{cardGroup(true)}</div></div></section>;
 }
 
 function Detail({ page, c, lang }: { page: PageKey; c: Copy; lang: Language }) {
-  const people = page === 'team' ? c.team : c.trustees;
-  const portraits = page === 'team' ? media.management : media.trustees;
-  return <div className={`detail-page detail-${page}`}>
-    <div className="breadcrumb"><Link href={`/${lang}`}>{c.home}</Link><span>/</span><span>{c.nav[pageKeys.indexOf(page)]}</span></div>
-    {page==='program' ? <Program c={c} lang={lang} expanded /> : <>
-      <section className="detail-intro section-pad"><Eyebrow>{c.nav[pageKeys.indexOf(page)]}</Eyebrow><h1>{page==='about' ? c.aboutTitle : page==='team' ? c.teamIntro : page==='trustees' ? c.trusteesIntro : c.contactTitle}</h1><p>{page==='about' ? c.aboutBody : page==='contact' ? c.contactText : c.peopleNote}</p></section>
-      {page==='about' && <section className="history-section section-pad"><Eyebrow>{c.history}</Eyebrow><div className="history-list">{c.scenes.map((s,i)=><article key={s.period}><span>{i===0 || i===4 ? s.year : `0${i}`}{'placeholder' in s && <small>{s.placeholder}</small>}</span><div><h2>{s.title.join(' ')}</h2><p>{s.body}</p></div></article>)}</div><p className="draft-note">{c.prototype}</p></section>}
-      {(page==='team' || page==='trustees') && <section className="people-grid section-pad">{people.map((person,i)=><article key={i}><div className="portrait-placeholder" role="img" aria-label={`${c.portrait} ${i+1}: ${person.name}`}><span>{String(i+1).padStart(2,'0')}</span>{portraits[i]?.src ? <img src={portraits[i].src} alt={portraits[i].alt[lang]} width={400} height={500} loading="lazy" /> : <><Mark /><p>{c.portrait}</p></>}</div><h2>{person.name}</h2><span className="person-role">{person.role}</span><p>{c.biography}</p></article>)}</section>}
-      {page==='contact' && <section className="contact-details section-pad"><div><Eyebrow>{c.email}</Eyebrow>{organization.email ? <a className="contact-email" href={`mailto:${organization.email}`}>{organization.email}</a> : <p>{c.emailPending}</p>}</div><div><Eyebrow>{c.address}</Eyebrow><p>{organization.address || c.addressPending}</p></div><p className="draft-note">{c.contactPlaceholder}</p></section>}
-    </>}
-  </div>;
+  const copyIndex = pageKeys.indexOf(page);
+  const menuIndex = Math.max(0, menuPageKeys.indexOf(page));
+  return <section className={`blank-detail blank-detail-${page}`} aria-labelledby="detail-title"><div className="blank-detail-grid" aria-hidden="true"><i/><i/><i/><i/></div><div className="blank-detail-heading"><span>{String(menuIndex + 1).padStart(2, '0')}</span><h1 id="detail-title">{c.nav[copyIndex]}</h1></div><svg className="blank-detail-line" viewBox="0 0 1600 760" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true"><path d="M-80 620C170 620 160 290 410 290S565 660 830 550 920 115 1175 155 1245 515 1660 250"/><circle cx="410" cy="290" r="13"/><circle cx="830" cy="550" r="13"/><circle cx="1175" cy="155" r="13"/></svg><Link className="blank-detail-home" href={`/${lang}`}><span>{c.home}</span><ArrowUpRight/></Link></section>;
 }
-function Footer({ c, lang, page, openPrivacy }: { c: Copy; lang: Language; page?: PageKey; openPrivacy: ()=>void }) {
-  return <footer>{page!=='contact' && <div className="contact-strip section-pad"><div><Eyebrow>{c.contactEyebrow}</Eyebrow><h2>{c.contactTitle}</h2></div><Link className="contact-button" href={`/${lang}/contact`}><ArrowUpRight size={34}/><span>{c.contactAction}</span></Link></div>}<div className="footer-main"><Link className="brand" href={`/${lang}`}><Mark/><span>{c.name}<small>{c.footer}</small></span></Link><span className="footer-year">2007 <span>————</span> {new Date().getFullYear()}</span><a href="#top" className="text-link">{c.backTop}<ArrowUp size={16}/></a></div><div className="footer-bottom"><span>© {new Date().getFullYear()} {c.name}</span><button onClick={openPrivacy}>{c.privacy}</button><span>{c.descriptor}</span></div></footer>;
+
+function Footer({ c, lang, openPrivacy }: { c: Copy; lang: Language; openPrivacy: ()=>void }) {
+  const socials = [{ label: 'Instagram', url: organization.instagram, icon: <InstagramMark/> }, { label: 'X', url: organization.x, icon: <XMark/> }];
+  return <footer className="site-footer"><div className="footer-vision"><Link className="brand footer-brand" href={`/${lang}`}><Mark/><span>{c.name}<small>{c.descriptor}</small></span></Link><p>2007 <i/> {lang === 'tr' ? '25. YIL VİZYONU' : '25TH-YEAR VISION'}</p></div><div className="footer-socials" aria-label={lang === 'tr' ? 'Sosyal medya' : 'Social media'}>{socials.map(item => item.url ? <a key={item.label} href={item.url} target="_blank" rel="noreferrer"><span>{item.icon}</span>{item.label}<ArrowUpRight/></a> : <span className="social-placeholder" key={item.label} aria-disabled="true"><span>{item.icon}</span>{item.label}</span>)}</div><div className="footer-floor"><span>© {new Date().getFullYear()} {c.name}</span><button onClick={openPrivacy}>{c.privacy}</button><a href="#top">{c.backTop}<ArrowUp size={15}/></a></div></footer>;
 }
 export function YouthSite({ lang, page }: { lang: Language; page?: PageKey }) {
   const c = content[lang];
   const [allowed,setAllowed]=useState(() => { try { return typeof window !== 'undefined' && localStorage.getItem('living-line-social')==='allowed'; } catch { return false; } }); const [privacy,setPrivacy]=useState(false);
   useEffect(()=> { document.documentElement.lang=lang; },[lang]);
   const toggleConsent=()=>setAllowed(previous=> {const next=!previous; try{localStorage.setItem('living-line-social',next?'allowed':'blocked');}catch{} return next;});
-  return <div id="top" className="site-shell"><Header c={c} lang={lang} page={page}/><main id="main" tabIndex={-1}>{page ? <Detail page={page} lang={lang} c={c}/> : <Story c={c} lang={lang}/>}</main>{page && <Footer c={c} lang={lang} page={page} openPrivacy={()=>setPrivacy(true)}/>}<Dialog open={privacy} onOpenChange={setPrivacy}><DialogContent className="privacy-dialog" showCloseButton={false}><div className="privacy-heading"><Mark/><Button variant="ghost" size="icon" aria-label={c.close} onClick={()=>setPrivacy(false)}><X/></Button></div><DialogTitle>{c.privacyTitle}</DialogTitle><DialogDescription>{c.privacyText}</DialogDescription><p role="status" className="privacy-status">{allowed ? c.privacyAllowed : c.privacyBlocked}</p><Button className="primary-action" onClick={toggleConsent}>{allowed ? c.socialRevoke : c.socialConsent}</Button></DialogContent></Dialog></div>;
+  return <div id="top" className="site-shell"><Header c={c} lang={lang} page={page}/><main id="main" tabIndex={-1}>{page ? <Detail page={page} lang={lang} c={c}/> : <><Story c={c} lang={lang}/><StatsBar lang={lang}/><ProgramsShowcase lang={lang}/></>}</main><Footer c={c} lang={lang} openPrivacy={()=>setPrivacy(true)}/><Dialog open={privacy} onOpenChange={setPrivacy}><DialogContent className="privacy-dialog" showCloseButton={false}><div className="privacy-heading"><Mark/><Button variant="ghost" size="icon" aria-label={c.close} onClick={()=>setPrivacy(false)}><X/></Button></div><DialogTitle>{c.privacyTitle}</DialogTitle><DialogDescription>{c.privacyText}</DialogDescription><p role="status" className="privacy-status">{allowed ? c.privacyAllowed : c.privacyBlocked}</p><Button className="primary-action" onClick={toggleConsent}>{allowed ? c.socialRevoke : c.socialConsent}</Button></DialogContent></Dialog></div>;
 }
