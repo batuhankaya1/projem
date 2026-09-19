@@ -12,7 +12,7 @@ function Mark({ className = '' }: { className?: string }) {
   return <svg className={`mark ${className}`} viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M5 33C14 33 6 13 17 13S21 35 30 34 29 11 43 11" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" /></svg>;
 }
 function BrandLogo({ className = '' }: { className?: string }) {
-  return <img className={`brand-logo-image ${className}`} src="/images/projem-main-logo.png" alt="Projem Lider Gençlik" width="800" height="341"/>;
+  return <img className={`brand-logo-image ${className}`} src="/images/projem-main-logo-transparent.png" alt="Projem Lider Gençlik" width="1921" height="819"/>;
 }
 function InstagramMark() {
   return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>;
