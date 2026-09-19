@@ -17,6 +17,9 @@ function InstagramMark() {
 function XMark() {
   return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4.5 19 19.5M19 4.5 5 19.5"/></svg>;
 }
+function LinkedInMark() {
+  return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7.25v.25M12 17v-4.1c0-1.8 1.15-2.9 2.65-2.9 1.45 0 2.35.95 2.35 2.9V17M12 10v7"/></svg>;
+}
 const menuPageKeys: PageKey[] = ['about', 'team', 'contact'];
 function Header({ lang, page, c }: { lang: Language; page?: PageKey; c: Copy }) {
   const [menu, setMenu] = useState(false);
@@ -43,7 +46,7 @@ function Header({ lang, page, c }: { lang: Language; page?: PageKey; c: Copy }) 
             </section>
             <nav className="index-navigation" aria-label={lang === 'tr' ? 'Ana menü' : 'Main navigation'}>{menuPageKeys.map((key, i) => { const copyIndex = pageKeys.indexOf(key); return <Link key={key} className="index-row" href={`/${lang}/${key}`} onClick={() => setMenu(false)} aria-current={page === key ? 'page' : undefined} style={{ '--index-delay': `${i * 55}ms` } as CSSProperties}><span className="index-number">0{i+1}</span><span className="index-label"><strong>{c.nav[copyIndex]}</strong><small>{menuNotes[i]}</small></span><ArrowUpRight aria-hidden="true"/></Link> })}</nav>
           </div>
-          <div className="index-footer"><span>{lang === 'tr' ? '2007 — 25. YIL VİZYONU' : '2007 — 25TH-YEAR VISION'}</span><nav className="route-language" aria-label="Dil / Language">{(['tr', 'en'] as Language[]).map(language => <Link key={language} href={`/${language}${page ? `/${page}` : ''}`} onClick={() => { remember(language); setMenu(false); }} hrefLang={language} lang={language} aria-current={lang === language ? 'true' : undefined}>{language.toUpperCase()}</Link>)}</nav></div>
+          <div className="index-footer"><span>{lang === 'tr' ? '2007 — 25. YIL VİZYONU' : '2007 — 25TH-YEAR VISION'}</span><nav className="route-language" aria-label="Dil / Language">{(['tr', 'en'] as Language[]).map(language => <a key={language} href={`/${language}${page ? `/${page}` : ''}`} onPointerDown={() => remember(language)} hrefLang={language} lang={language} aria-current={lang === language ? 'page' : undefined}>{language.toUpperCase()}</a>)}</nav></div>
         </SheetContent>
       </Sheet>
     </header>
@@ -197,13 +200,13 @@ function Detail({ page, c, lang }: { page: PageKey; c: Copy; lang: Language }) {
 }
 
 function Footer({ c, lang, openPrivacy }: { c: Copy; lang: Language; openPrivacy: ()=>void }) {
-  const socials = [{ label: 'Instagram', url: organization.instagram, icon: <InstagramMark/> }, { label: 'X', url: organization.x, icon: <XMark/> }];
+  const socials = [{ label: 'Instagram', url: organization.instagram, icon: <InstagramMark/> }, { label: 'X', url: organization.x, icon: <XMark/> }, { label: 'LinkedIn', url: organization.linkedin, icon: <LinkedInMark/> }];
   return <footer className="site-footer"><div className="footer-vision"><Link className="brand footer-brand" href={`/${lang}`}><Mark/><span>{c.name}<small>{c.descriptor}</small></span></Link><p>2007 <i/> {lang === 'tr' ? '25. YIL VİZYONU' : '25TH-YEAR VISION'}</p></div><div className="footer-socials" aria-label={lang === 'tr' ? 'Sosyal medya' : 'Social media'}>{socials.map(item => item.url ? <a key={item.label} href={item.url} target="_blank" rel="noreferrer"><span>{item.icon}</span>{item.label}<ArrowUpRight/></a> : <span className="social-placeholder" key={item.label} aria-disabled="true"><span>{item.icon}</span>{item.label}</span>)}</div><div className="footer-floor"><span>© {new Date().getFullYear()} {c.name}</span><button onClick={openPrivacy}>{c.privacy}</button><a href="#top">{c.backTop}<ArrowUp size={15}/></a></div></footer>;
 }
 export function YouthSite({ lang, page }: { lang: Language; page?: PageKey }) {
   const c = content[lang];
   const [allowed,setAllowed]=useState(() => { try { return typeof window !== 'undefined' && localStorage.getItem('living-line-social')==='allowed'; } catch { return false; } }); const [privacy,setPrivacy]=useState(false);
-  useEffect(()=> { document.documentElement.lang=lang; },[lang]);
+  useEffect(()=> { document.documentElement.lang=lang; try { localStorage.setItem('living-line-language', lang); } catch {} },[lang]);
   const toggleConsent=()=>setAllowed(previous=> {const next=!previous; try{localStorage.setItem('living-line-social',next?'allowed':'blocked');}catch{} return next;});
   return <div id="top" className="site-shell"><Header c={c} lang={lang} page={page}/><main id="main" tabIndex={-1}>{page ? <Detail page={page} lang={lang} c={c}/> : <><Story c={c} lang={lang}/><StatsBar lang={lang}/><ProgramsShowcase lang={lang}/></>}</main><Footer c={c} lang={lang} openPrivacy={()=>setPrivacy(true)}/><Dialog open={privacy} onOpenChange={setPrivacy}><DialogContent className="privacy-dialog" showCloseButton={false}><div className="privacy-heading"><Mark/><Button variant="ghost" size="icon" aria-label={c.close} onClick={()=>setPrivacy(false)}><X/></Button></div><DialogTitle>{c.privacyTitle}</DialogTitle><DialogDescription>{c.privacyText}</DialogDescription><p role="status" className="privacy-status">{allowed ? c.privacyAllowed : c.privacyBlocked}</p><Button className="primary-action" onClick={toggleConsent}>{allowed ? c.socialRevoke : c.socialConsent}</Button></DialogContent></Dialog></div>;
 }

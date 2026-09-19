@@ -4,7 +4,7 @@ export const languages: Language[] = ['tr', 'en'];
 export const pageKeys: PageKey[] = ['about', 'program', 'team', 'trustees', 'contact'];
 export const organization = {
   name: 'Projem', foundingYear: 2007,
-  email: '', address: '', instagram: '', x: '',
+  email: '', address: '', instagram: '', x: '', linkedin: '',
 };
 // Use approved local images (for example /images/archive-2007.webp) and meaningful alt text.
 // Empty sources intentionally render the abstract narrative or labelled portrait space.
