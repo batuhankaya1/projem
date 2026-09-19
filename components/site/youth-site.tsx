@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react';
-import Link from 'next/link';
 import { ArrowUpRight, ArrowUp, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription, SheetClose } from '@/components/ui/sheet';
@@ -33,7 +32,7 @@ function Header({ lang, page, c }: { lang: Language; page?: PageKey; c: Copy }) 
   return <>
     <a className="skip-link" href="#main">{c.skipNav}</a>
     <header className="site-header route-header">
-      <Link href={`/${lang}`} className="brand route-brand" aria-label={`${c.name} — ${c.home}`}><BrandLogo/></Link>
+      <a href={`/${lang}`} className="brand route-brand" aria-label={`${c.name} — ${c.home}`}><BrandLogo/></a>
       <Sheet open={menu} onOpenChange={setMenu}>
         <SheetTrigger asChild><button className="route-menu-trigger" aria-label={c.menu}><span>{lang === 'tr' ? 'Menü' : 'Menu'}</span><span className="route-menu-icon" aria-hidden="true"><i/><i/></span></button></SheetTrigger>
         <SheetContent side="top" className="route-menu-sheet" showCloseButton={false}>
@@ -202,7 +201,7 @@ function Detail({ page, c, lang }: { page: PageKey; c: Copy; lang: Language }) {
   if (page === 'about') return <AboutPage c={c} lang={lang}/>;
   if (page === 'team') return <ManagementPage c={c} lang={lang}/>;
   if (page === 'contact') return <ContactPage c={c} lang={lang}/>;
-  return <section className={`blank-detail blank-detail-${page}`} aria-labelledby="detail-title"><div className="blank-detail-grid" aria-hidden="true"><i/><i/><i/><i/></div><div className="blank-detail-heading"><span>{String(menuIndex + 1).padStart(2, '0')}</span><h1 id="detail-title">{c.nav[copyIndex]}</h1></div><svg className="blank-detail-line" viewBox="0 0 1600 760" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true"><path d="M-80 620C170 620 160 290 410 290S565 660 830 550 920 115 1175 155 1245 515 1660 250"/><circle cx="410" cy="290" r="13"/><circle cx="830" cy="550" r="13"/><circle cx="1175" cy="155" r="13"/></svg><Link className="blank-detail-home" href={`/${lang}`}><span>{c.home}</span><ArrowUpRight/></Link></section>;
+  return <section className={`blank-detail blank-detail-${page}`} aria-labelledby="detail-title"><div className="blank-detail-grid" aria-hidden="true"><i/><i/><i/><i/></div><div className="blank-detail-heading"><span>{String(menuIndex + 1).padStart(2, '0')}</span><h1 id="detail-title">{c.nav[copyIndex]}</h1></div><svg className="blank-detail-line" viewBox="0 0 1600 760" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true"><path d="M-80 620C170 620 160 290 410 290S565 660 830 550 920 115 1175 155 1245 515 1660 250"/><circle cx="410" cy="290" r="13"/><circle cx="830" cy="550" r="13"/><circle cx="1175" cy="155" r="13"/></svg><a className="blank-detail-home" href={`/${lang}`}><span>{c.home}</span><ArrowUpRight/></a></section>;
 }
 
 function InstitutionalIntro({ index, title, lead }: { index: string; title: string; lead: string }) {
@@ -236,7 +235,7 @@ function ContactPage({ c, lang }: { c: Copy; lang: Language }) {
 
 function Footer({ c, lang, openPrivacy }: { c: Copy; lang: Language; openPrivacy: ()=>void }) {
   const socials = [{ label: 'Instagram', url: organization.instagram, icon: <InstagramMark/> }, { label: 'X', url: organization.x, icon: <XMark/> }, { label: 'LinkedIn', url: organization.linkedin, icon: <LinkedInMark/> }];
-  return <footer className="site-footer"><div className="footer-vision"><Link className="brand footer-brand" href={`/${lang}`} aria-label={`${c.name} — ${c.home}`}><BrandLogo/></Link><p>2007 <i/> {lang === 'tr' ? '25. YIL VİZYONU' : '25TH-YEAR VISION'}</p></div><div className="footer-socials" aria-label={lang === 'tr' ? 'Sosyal medya' : 'Social media'}>{socials.map(item => item.url ? <a key={item.label} href={item.url} target="_blank" rel="noreferrer"><span>{item.icon}</span>{item.label}<ArrowUpRight/></a> : <span className="social-placeholder" key={item.label} aria-disabled="true"><span>{item.icon}</span>{item.label}</span>)}</div><div className="footer-floor"><span>© {new Date().getFullYear()} {c.name}</span><button onClick={openPrivacy}>{c.privacy}</button><a href="#top">{c.backTop}<ArrowUp size={15}/></a></div></footer>;
+  return <footer className="site-footer"><div className="footer-vision"><a className="brand footer-brand" href={`/${lang}`} aria-label={`${c.name} — ${c.home}`}><BrandLogo/></a><p>2007 <i/> {lang === 'tr' ? '25. YIL VİZYONU' : '25TH-YEAR VISION'}</p></div><div className="footer-socials" aria-label={lang === 'tr' ? 'Sosyal medya' : 'Social media'}>{socials.map(item => item.url ? <a key={item.label} href={item.url} target="_blank" rel="noreferrer"><span>{item.icon}</span>{item.label}<ArrowUpRight/></a> : <span className="social-placeholder" key={item.label} aria-disabled="true"><span>{item.icon}</span>{item.label}</span>)}</div><div className="footer-floor"><span>© {new Date().getFullYear()} {c.name}</span><button onClick={openPrivacy}>{c.privacy}</button><a href="#top">{c.backTop}<ArrowUp size={15}/></a></div></footer>;
 }
 export function YouthSite({ lang, page }: { lang: Language; page?: PageKey }) {
   const c = content[lang];
