@@ -9,5 +9,5 @@ export default function LanguageEntry() {
     const lang = saved === 'tr' || saved === 'en' ? saved : navigator.language.toLowerCase().startsWith('tr') ? 'tr' : 'en';
     window.location.replace(`/${lang}${window.location.hash}`);
   }, []);
-  return <main className="language-entry"><span className="brand-symbol" aria-hidden="true">∿</span><h1>Projem</h1><p>2007 — Bugün / Today</p><nav aria-label="Dil / Language"><Link href="/tr" onClick={() => remember('tr')}>Türkçe</Link><Link href="/en" onClick={() => remember('en')}>English</Link></nav></main>;
+  return <main className="language-entry"><img className="language-entry-logo" src="/images/projem-main-logo.png" alt="Projem Lider Gençlik" width="800" height="341"/><p>2007 — Bugün / Today</p><nav aria-label="Dil / Language"><Link href="/tr" onClick={() => remember('tr')}>Türkçe</Link><Link href="/en" onClick={() => remember('en')}>English</Link></nav></main>;
 }
