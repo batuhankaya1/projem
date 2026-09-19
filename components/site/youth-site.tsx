@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, ArrowUp, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -196,7 +196,38 @@ function ProgramsShowcase({ lang }: { lang: Language }) {
 function Detail({ page, c, lang }: { page: PageKey; c: Copy; lang: Language }) {
   const copyIndex = pageKeys.indexOf(page);
   const menuIndex = Math.max(0, menuPageKeys.indexOf(page));
+  if (page === 'about') return <AboutPage c={c} lang={lang}/>;
+  if (page === 'team') return <ManagementPage c={c} lang={lang}/>;
+  if (page === 'contact') return <ContactPage c={c} lang={lang}/>;
   return <section className={`blank-detail blank-detail-${page}`} aria-labelledby="detail-title"><div className="blank-detail-grid" aria-hidden="true"><i/><i/><i/><i/></div><div className="blank-detail-heading"><span>{String(menuIndex + 1).padStart(2, '0')}</span><h1 id="detail-title">{c.nav[copyIndex]}</h1></div><svg className="blank-detail-line" viewBox="0 0 1600 760" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true"><path d="M-80 620C170 620 160 290 410 290S565 660 830 550 920 115 1175 155 1245 515 1660 250"/><circle cx="410" cy="290" r="13"/><circle cx="830" cy="550" r="13"/><circle cx="1175" cy="155" r="13"/></svg><Link className="blank-detail-home" href={`/${lang}`}><span>{c.home}</span><ArrowUpRight/></Link></section>;
+}
+
+function InstitutionalIntro({ index, title, lead }: { index: string; title: string; lead: string }) {
+  return <header className="institutional-intro"><span>{index}</span><div><h1>{title}</h1><p>{lead}</p></div></header>;
+}
+
+function AboutPage({ c, lang }: { c: Copy; lang: Language }) {
+  const paragraphs = lang === 'tr' ? [
+    'Projem, 2007’den bu yana gençlerin birlikte öğrenebildiği, sorumluluk alabildiği ve kalıcı bağlar kurabildiği gönüllülük esaslı bir gençlik çalışmasıdır.',
+    'Derslerden kamplara, hitabet çalışmalarından Türkiye gezilerine uzanan programlarımız; gençlerin düşünme, ifade etme ve birlikte hareket etme becerilerini destekleyen uzun soluklu bir deneyim oluşturur.',
+    'Bugün geçmişten gelen birikimimizi korurken 25. yıl vizyonumuz doğrultusunda daha güçlü bir kurumsal hafıza, sürdürülebilir bir gönüllülük yapısı ve kuşaklar arası bir topluluk inşa ediyoruz.',
+  ] : [
+    'Since 2007, Projem has been a volunteer-led youth initiative where young people can learn together, take responsibility and build lasting relationships.',
+    'From classes and camps to public-speaking sessions and journeys across Türkiye, our programmes create a long-term experience that supports thought, expression and collective action.',
+    'Today, while protecting the experience built over the years, we are working toward our 25th-year vision: a stronger institutional memory, sustainable volunteering and an intergenerational community.',
+  ];
+  return <section className="institutional-page about-page"><InstitutionalIntro index="01" title={c.nav[0]} lead={lang === 'tr' ? 'Birlikte öğrenen, üreten ve sorumluluk alan bir gençlik topluluğu.' : 'A youth community that learns, creates and takes responsibility together.'}/><div className="about-editorial"><div className="about-statement"><span>{lang === 'tr' ? '2007’DEN BUGÜNE' : 'SINCE 2007'}</span><strong>{lang === 'tr' ? 'Bir programdan fazlası; kuşaklar arasında devam eden bir bağ.' : 'More than a programme; a connection carried across generations.'}</strong></div><div className="about-copy">{paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div></div><div className="about-principles"><article><span>01</span><h2>{lang === 'tr' ? 'Gönüllülük' : 'Volunteering'}</h2></article><article><span>02</span><h2>{lang === 'tr' ? 'Birlikte öğrenme' : 'Learning together'}</h2></article><article><span>03</span><h2>{lang === 'tr' ? 'Süreklilik' : 'Continuity'}</h2></article></div></section>;
+}
+
+function ManagementPage({ c, lang }: { c: Copy; lang: Language }) {
+  const departments = lang === 'tr' ? ['Program ve Eğitim', 'Organizasyon ve Kamplar', 'İletişim ve Kurumsal İlişkiler', 'Mezun ve Mensup İlişkileri'] : ['Programme and Education', 'Organisation and Camps', 'Communications and Institutional Relations', 'Alumni and Member Relations'];
+  return <section className="institutional-page management-page"><InstitutionalIntro index="02" title={c.nav[2]} lead={lang === 'tr' ? 'Sorumluluğu paylaşan, programları birlikte yürüten bir yönetim yapısı.' : 'A management structure that shares responsibility and runs programmes together.'}/><div className="org-chart" aria-label={lang === 'tr' ? 'Yönetim organizasyon şeması' : 'Management organisation chart'}><article className="org-node org-lead"><span>01</span><p>{lang === 'tr' ? 'Proje Başkanı' : 'Project Chair'}</p><strong>[{lang === 'tr' ? 'Ad Soyad' : 'Full Name'}]</strong></article><div className="org-trunk" aria-hidden="true"/><div className="org-board"><article className="org-node"><span>02</span><p>{lang === 'tr' ? 'Genel Koordinasyon' : 'General Coordination'}</p><strong>[{lang === 'tr' ? 'Ad Soyad' : 'Full Name'}]</strong></article><article className="org-node"><span>03</span><p>{lang === 'tr' ? 'Yürütme Kurulu' : 'Executive Board'}</p><strong>[{lang === 'tr' ? 'Ad Soyad' : 'Full Name'}]</strong></article></div><div className="org-branches" aria-hidden="true"/><div className="org-departments">{departments.map((department, i) => <article className="org-node" key={department}><span>{String(i + 4).padStart(2, '0')}</span><p>{department}</p><strong>[{lang === 'tr' ? 'Ad Soyad' : 'Full Name'}]</strong></article>)}</div></div></section>;
+}
+
+function ContactPage({ c, lang }: { c: Copy; lang: Language }) {
+  const [status, setStatus] = useState('');
+  function handleSubmit(event: FormEvent<HTMLFormElement>) { event.preventDefault(); setStatus(lang === 'tr' ? 'Form tasarımı hazır. Gönderim kanalı tanımlandığında bu alan aktifleşecek.' : 'The form is ready. Submission will be enabled when a delivery channel is configured.'); }
+  return <section className="institutional-page contact-page"><InstitutionalIntro index="03" title={c.nav[4]} lead={lang === 'tr' ? 'Tanışmak, bir fikir paylaşmak veya iş birliği için bize ulaşın.' : 'Reach us to meet, share an idea or explore a collaboration.'}/><div className="contact-layout"><aside><span>{lang === 'tr' ? 'İLETİŞİM FORMU' : 'CONTACT FORM'}</span><h2>{lang === 'tr' ? 'Bir merhaba, yeni bir çizginin başlangıcı olabilir.' : 'A simple hello can begin a new line.'}</h2><Mark/></aside><form className="contact-form" onSubmit={handleSubmit}><div className="form-row"><label><span>{lang === 'tr' ? 'İsim' : 'First name'}</span><input name="firstName" autoComplete="given-name" required/></label><label><span>{lang === 'tr' ? 'Soyisim' : 'Last name'}</span><input name="lastName" autoComplete="family-name" required/></label></div><label><span>{lang === 'tr' ? 'E-posta' : 'Email'}</span><input type="email" name="email" autoComplete="email" required/></label><label><span>{lang === 'tr' ? 'Konu' : 'Subject'}</span><select name="subject" defaultValue="" required><option value="" disabled>{lang === 'tr' ? 'Bir konu seçin' : 'Select a subject'}</option><option value="membership">{lang === 'tr' ? 'Katılım ve mensupluk' : 'Participation and membership'}</option><option value="collaboration">{lang === 'tr' ? 'İş birliği' : 'Collaboration'}</option><option value="general">{lang === 'tr' ? 'Genel iletişim' : 'General enquiry'}</option></select></label><label><span>{lang === 'tr' ? 'Mesajınız' : 'Your message'}</span><textarea name="message" rows={6} required/></label><div className="form-action"><button type="submit">{lang === 'tr' ? 'Mesajı gönder' : 'Send message'}<ArrowUpRight/></button><p>{lang === 'tr' ? 'Gönderim altyapısı sonraki aşamada bağlanacaktır.' : 'The delivery channel will be connected in the next phase.'}</p></div>{status && <p className="form-status" role="status">{status}</p>}</form></div></section>;
 }
 
 function Footer({ c, lang, openPrivacy }: { c: Copy; lang: Language; openPrivacy: ()=>void }) {
