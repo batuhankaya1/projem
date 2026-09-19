@@ -332,21 +332,22 @@
 .about-principles span{color:var(--orange);font-size:11px;letter-spacing:.15em}
 .about-principles h2{margin:58px 0 0;font-size:clamp(24px,2.5vw,40px);font-weight:400;letter-spacing:-.045em}
 
-.org-chart{position:relative;max-width:1280px;margin:clamp(70px,8vw,125px) auto 0}
-.org-node{position:relative;z-index:2;min-height:150px;padding:25px;background:#f7f6f0;border:1px solid #bdc5bb}
-.org-node>span{color:var(--orange);font-size:10px;letter-spacing:.16em}
-.org-node>p{margin:28px 0 0;color:#68756e;font-size:14px;line-height:1.4}
-.org-node>strong{display:block;margin-top:12px;font-size:clamp(20px,1.8vw,28px);font-weight:400;letter-spacing:-.035em}
-.org-lead{width:min(390px,100%);margin:0 auto;border-top:4px solid var(--orange)}
-.org-trunk{width:1px;height:64px;margin:0 auto;background:#8d9a91}
-.org-board{position:relative;display:grid;grid-template-columns:repeat(2,minmax(240px,390px));justify-content:center;gap:clamp(60px,11vw,175px)}
-.org-board:before{content:"";position:absolute;left:25%;right:25%;top:-1px;height:1px;background:#8d9a91}
-.org-board .org-node:before{content:"";position:absolute;left:50%;bottom:100%;width:1px;height:32px;background:#8d9a91}
-.org-branches{width:1px;height:85px;margin:0 auto;background:#8d9a91}
-.org-departments{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.org-departments:before{content:"";position:absolute;left:12.5%;right:12.5%;top:-34px;height:1px;background:#8d9a91}
-.org-departments .org-node:before{content:"";position:absolute;left:50%;bottom:100%;width:1px;height:34px;background:#8d9a91}
-.org-departments .org-node{min-height:180px}
+.org-orbit{position:relative;max-width:1180px;aspect-ratio:1.31;margin:clamp(70px,8vw,125px) auto 0}
+.org-orbit>svg{position:absolute;inset:0;width:100%;height:100%;stroke:#91a097;stroke-width:1}
+.org-orbit>svg ellipse{stroke-dasharray:3 9}
+.org-circle{position:absolute;z-index:2;width:clamp(155px,15vw,205px);aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:#f7f6f0;border:1px solid #aeb9b0;border-radius:50%;text-align:center;box-shadow:0 18px 45px rgba(36,63,53,.08)}
+.org-circle>span{position:absolute;top:18px;color:var(--orange);font-size:10px;letter-spacing:.16em}
+.org-circle>p{max-width:150px;margin:0;color:#68756e;font-size:13px;line-height:1.3}
+.org-circle>strong{display:block;margin-top:10px;font-size:clamp(16px,1.35vw,21px);font-weight:400;letter-spacing:-.03em}
+.org-center{left:50%;top:50%;width:clamp(210px,20vw,285px);transform:translate(-50%,-50%);background:#173f35;color:#f7f6f0;border-color:#173f35;box-shadow:0 26px 75px rgba(23,63,53,.2)}
+.org-center>p{color:#b8c9bf;font-size:14px}.org-center>strong{font-size:clamp(20px,1.8vw,28px)}
+.org-center .mark{position:absolute;bottom:18px;width:45px;height:30px;color:#ed9566}
+.org-position-0{left:50%;top:0;transform:translateX(-50%)}
+.org-position-1{right:0;top:18%}
+.org-position-2{right:11%;bottom:8%}
+.org-position-3{left:50%;bottom:0;transform:translateX(-50%)}
+.org-position-4{left:11%;bottom:8%}
+.org-position-5{left:0;top:18%}
 
 .contact-layout{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(540px,1.2fr);gap:clamp(60px,9vw,150px);padding-top:clamp(70px,9vw,135px)}
 .contact-layout aside{position:relative;min-height:530px;padding:35px;border-top:1px solid #aeb8ae;border-bottom:1px solid #aeb8ae}
@@ -397,11 +398,11 @@
   .about-principles article{min-height:125px;border-right:0;border-bottom:1px solid #bdc5bb}
   .about-principles article:last-child{border-bottom:0}
   .about-principles h2{margin-top:30px}
-  .org-chart{margin-top:70px}
-  .org-trunk,.org-branches{height:40px}
-  .org-board,.org-departments{grid-template-columns:1fr;gap:16px}
-  .org-board:before,.org-departments:before,.org-board .org-node:before,.org-departments .org-node:before{display:none}
-  .org-node,.org-departments .org-node{min-height:135px}
+  .org-orbit{aspect-ratio:auto;display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:70px}
+  .org-orbit>svg{display:none}
+  .org-circle,.org-center,.org-position-0,.org-position-1,.org-position-2,.org-position-3,.org-position-4,.org-position-5{position:relative;inset:auto;width:100%;transform:none}
+  .org-center{grid-column:1/-1;width:min(260px,72vw);margin:0 auto 18px}
+  .org-circle>p{font-size:12px}.org-circle>strong{font-size:15px}
   .contact-layout{grid-template-columns:1fr;gap:55px;padding-top:70px}
   .contact-layout aside{min-height:390px;padding:25px}
   .contact-layout aside h2{margin-top:48px}
