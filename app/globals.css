@@ -207,6 +207,7 @@
 .index-kicker{position:absolute;top:32px;left:0;color:#a9baad;font-size:10px;letter-spacing:.16em;text-transform:uppercase}
 .index-vision{display:flex;align-items:center;gap:clamp(12px,2vw,32px);font-size:clamp(88px,11vw,190px);font-weight:500;letter-spacing:-.09em;line-height:.78;color:#f2f0e6;white-space:nowrap;transform:translateY(14px);animation:index-reveal .75s cubic-bezier(.2,.75,.2,1) both}
 .index-vision>span:last-child{color:#e58a58}
+.index-vision-anniversary>span:last-child{font-size:.42em;letter-spacing:.02em}
 .index-vision i{font-size:.2em;font-style:normal;font-weight:300;letter-spacing:0;color:#899d90}
 .index-identity h2{position:relative;margin-top:clamp(32px,5vh,68px);max-width:550px;font-family:Georgia,'Times New Roman',serif;font-size:clamp(29px,3.2vw,52px);font-style:italic;font-weight:400;letter-spacing:-.045em;line-height:1.05;color:#f2f0e6}
 .index-identity>p:last-child{position:relative;max-width:520px;margin-top:22px;color:#afc0b2;font-size:14px;line-height:1.7}

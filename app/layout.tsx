@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-export const metadata: Metadata = { title: 'Projem — 2007’den bugüne', description: '2007’den beri devam eden bir gençlik çalışması. A youth initiative active since 2007.', icons: { icon: '/favicon.svg', shortcut: '/favicon.svg' } };
+export const metadata: Metadata = { title: 'Projem — Lider Gençlik', description: '2007’den beri gençleri beş yıllık bir eğitim ve gelişim yolculuğunda buluşturan gönüllülük esaslı gençlik çalışması.', icons: { icon: '/images/projem-main-logo-transparent.png', shortcut: '/images/projem-main-logo-transparent.png', apple: '/images/projem-main-logo-transparent.png' } };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="tr" suppressHydrationWarning><body>{children}</body></html>;
 }
