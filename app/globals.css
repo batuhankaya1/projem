@@ -331,6 +331,24 @@
 .about-principles article:last-child{border-right:0}
 .about-principles span{color:var(--orange);font-size:11px;letter-spacing:.15em}
 .about-principles h2{margin:58px 0 0;font-size:clamp(24px,2.5vw,40px);font-weight:400;letter-spacing:-.045em}
+.about-model,.about-curriculum{padding:clamp(85px,10vw,155px) 0 0}
+.about-model>header,.about-curriculum>header{display:grid;grid-template-columns:minmax(80px,1fr) 3fr;gap:30px;align-items:start;margin-bottom:clamp(42px,6vw,82px)}
+.about-model>header>span,.about-curriculum>header>span{padding-top:8px;color:var(--orange);font-size:11px;letter-spacing:.18em}
+.about-model>header p,.about-curriculum>header p{margin:0 0 18px;color:var(--muted-ink);font-size:11px;letter-spacing:.17em}
+.about-model>header h2,.about-curriculum>header h2{margin:0;font-size:clamp(42px,6vw,92px);font-weight:400;letter-spacing:-.065em;line-height:.92}
+.about-model>div{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #c7c8c5;border-bottom:1px solid #c7c8c5}
+.about-model article{min-height:330px;padding:30px clamp(24px,3vw,48px) 38px;border-right:1px solid #c7c8c5;display:flex;flex-direction:column}
+.about-model article:last-child{border-right:0}
+.about-model article>span{color:var(--orange);font-size:11px;letter-spacing:.15em}
+.about-model article h3{margin:auto 0 18px;font-size:clamp(30px,3vw,48px);font-weight:400;letter-spacing:-.05em;line-height:1}
+.about-model article p{max-width:360px;margin:0;color:var(--muted-ink);font-size:15px;line-height:1.65}
+.curriculum-years{border-top:1px solid #c7c8c5}
+.curriculum-years article{display:grid;grid-template-columns:minmax(70px,.55fr) minmax(180px,1fr) 2fr;gap:30px;align-items:center;min-height:138px;border-bottom:1px solid #c7c8c5}
+.curriculum-years article>span{color:var(--orange);font-size:12px;letter-spacing:.15em}
+.curriculum-years article h3{margin:0;font-size:clamp(26px,3vw,44px);font-weight:400;letter-spacing:-.045em}
+.curriculum-years article p{max-width:620px;margin:0;color:var(--muted-ink);font-size:15px;line-height:1.65}
+.curriculum-methods{display:flex;flex-wrap:wrap;gap:9px;padding-top:34px}
+.curriculum-methods span{display:inline-flex;align-items:center;min-height:43px;padding:8px 16px;border:1px solid #bbbdbb;border-radius:999px;background:var(--paper);color:#555c5e;font-size:12px}
 
 .org-orbit{position:relative;max-width:1180px;aspect-ratio:1.31;margin:clamp(70px,8vw,125px) auto 0}
 .org-orbit>svg{position:absolute;inset:0;width:100%;height:100%;stroke:#91a097;stroke-width:1}
@@ -398,6 +416,17 @@
   .about-principles article{min-height:125px;border-right:0;border-bottom:1px solid #bdc5bb}
   .about-principles article:last-child{border-bottom:0}
   .about-principles h2{margin-top:30px}
+  .about-model,.about-curriculum{padding-top:85px}
+  .about-model>header,.about-curriculum>header{grid-template-columns:1fr;gap:14px;margin-bottom:42px}
+  .about-model>header>span,.about-curriculum>header>span{padding-top:0}
+  .about-model>header h2,.about-curriculum>header h2{font-size:clamp(42px,13vw,64px)}
+  .about-model>div{grid-template-columns:1fr}
+  .about-model article{min-height:230px;border-right:0;border-bottom:1px solid #c7c8c5}
+  .about-model article:last-child{border-bottom:0}
+  .curriculum-years article{grid-template-columns:45px 1fr;gap:14px 18px;padding:25px 0}
+  .curriculum-years article p{grid-column:2}
+  .curriculum-methods{gap:7px}
+  .curriculum-methods span{min-height:40px;padding:7px 13px;font-size:11px}
   .org-orbit{aspect-ratio:auto;display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:70px}
   .org-orbit>svg{display:none}
   .org-circle,.org-center,.org-position-0,.org-position-1,.org-position-2,.org-position-3,.org-position-4,.org-position-5{position:relative;inset:auto;width:100%;transform:none}

@@ -242,16 +242,16 @@ function Story({ c, lang }: { c: Copy; lang: Language }) {
 
 const programCards = {
   tr: [
-    { title: 'Dersler', detail: 'Yıl boyunca düzenli öğrenme ve paylaşım buluşmaları.' },
-    { title: 'Kamplar', detail: 'Birlikte yaşama, üretme ve dayanışma deneyimi.' },
-    { title: 'Hitabet', detail: 'Düşünceyi açık, güçlü ve sorumlu biçimde ifade etme çalışmaları.' },
-    { title: 'Türkiye Gezisi', detail: 'Farklı şehirleri, kültürleri ve hikâyeleri yerinde tanıma yolculuğu.' },
+    { title: 'Dersler', detail: 'Beş yıla yayılan; düşünce, kültür, liderlik ve proje üretimini birlikte ele alan eğitim çizgisi.' },
+    { title: 'Kamplar', detail: 'Hazırlık, yoğunlaşma ve değerlendirme dönemlerini birlikte yaşama deneyimiyle buluşturan kamplar.' },
+    { title: 'Hitabet', detail: 'Düşünceyi açık, güçlü ve sorumlu biçimde ifade etmeye odaklanan uygulamalı çalışmalar.' },
+    { title: 'Türkiye Gezisi', detail: 'Şehirleri, kültürel mirası ve farklı hayatları yerinde tanımaya açılan öğrenme rotaları.' },
   ],
   en: [
-    { title: 'Classes', detail: 'Regular learning and exchange sessions throughout the year.' },
-    { title: 'Camps', detail: 'An experience of living, creating and sharing together.' },
-    { title: 'Public Speaking', detail: 'Learning to express ideas with clarity, confidence and responsibility.' },
-    { title: 'Türkiye Journey', detail: 'Discovering different cities, cultures and stories first-hand.' },
+    { title: 'Classes', detail: 'A five-year learning path connecting thought, culture, leadership and project development.' },
+    { title: 'Camps', detail: 'Preparation, intensive learning and evaluation periods combined with the experience of living together.' },
+    { title: 'Public Speaking', detail: 'Practical work focused on expressing ideas with clarity, confidence and responsibility.' },
+    { title: 'Türkiye Journey', detail: 'Learning routes that encounter cities, cultural heritage and different lives first-hand.' },
   ],
 };
 
@@ -280,20 +280,42 @@ function InstitutionalIntro({ index, title, lead }: { index: string; title: stri
 
 function AboutPage({ c, lang }: { c: Copy; lang: Language }) {
   const paragraphs = lang === 'tr' ? [
-    'Projem, 2007’den bu yana gençlerin birlikte öğrenebildiği, sorumluluk alabildiği ve kalıcı bağlar kurabildiği gönüllülük esaslı bir gençlik çalışmasıdır.',
-    'Derslerden kamplara, hitabet çalışmalarından Türkiye gezilerine uzanan programlarımız; gençlerin düşünme, ifade etme ve birlikte hareket etme becerilerini destekleyen uzun soluklu bir deneyim oluşturur.',
-    'Bugün geçmişten gelen birikimimizi korurken 25. yıl vizyonumuz doğrultusunda daha güçlü bir kurumsal hafıza, sürdürülebilir bir gönüllülük yapısı ve kuşaklar arası bir topluluk inşa ediyoruz.',
+    'Projem, 2007’den bu yana Türkiye’nin köklü liselerinde öğrenim gören gençleri beş yıllık bir eğitim ve gelişim yolculuğunda buluşturan gönüllülük esaslı bir gençlik çalışmasıdır.',
+    'Akademik ve entelektüel gelişimi milli ve manevi değerlerle birlikte ele alan program; derslerden kitap okumalarına, hitabetten proje yönetimine, kamplardan şehir ve kültür gezilerine uzanan bütünlüklü bir deneyim sunar.',
+    'Modelin sürekliliğini mezunların yeni kuşaklara rehberlik etmesi sağlar. Böylece Projem yalnızca bir eğitim programı değil; öğrencilerin sorumluluk aldığı, mezunların deneyimini aktardığı ve kuşaklar arasında büyüyen bir topluluk hâline gelir.',
   ] : [
-    'Since 2007, Projem has been a volunteer-led youth initiative where young people can learn together, take responsibility and build lasting relationships.',
-    'From classes and camps to public-speaking sessions and journeys across Türkiye, our programmes create a long-term experience that supports thought, expression and collective action.',
-    'Today, while protecting the experience built over the years, we are working toward our 25th-year vision: a stronger institutional memory, sustainable volunteering and an intergenerational community.',
+    'Since 2007, Projem has brought students from Türkiye’s established high schools together through a volunteer-led, five-year education and development journey.',
+    'The programme connects academic and intellectual development with shared values through classes, guided reading, public speaking, project management, camps and journeys focused on cities and culture.',
+    'Its continuity comes from alumni guiding new generations. Projem therefore grows beyond an education programme into an intergenerational community where students take responsibility and graduates pass on their experience.',
   ];
-  return <section className="institutional-page about-page"><InstitutionalIntro index="01" title={c.nav[0]} lead={lang === 'tr' ? 'Birlikte öğrenen, üreten ve sorumluluk alan bir gençlik topluluğu.' : 'A youth community that learns, creates and takes responsibility together.'}/><div className="about-editorial"><div className="about-statement"><span>{lang === 'tr' ? '2007’DEN BUGÜNE' : 'SINCE 2007'}</span><strong>{lang === 'tr' ? 'Bir programdan fazlası; kuşaklar arasında devam eden bir bağ.' : 'More than a programme; a connection carried across generations.'}</strong></div><div className="about-copy">{paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div></div><div className="about-principles"><article><span>01</span><h2>{lang === 'tr' ? 'Gönüllülük' : 'Volunteering'}</h2></article><article><span>02</span><h2>{lang === 'tr' ? 'Birlikte öğrenme' : 'Learning together'}</h2></article><article><span>03</span><h2>{lang === 'tr' ? 'Süreklilik' : 'Continuity'}</h2></article></div></section>;
+  const initiatives = lang === 'tr' ? [
+    { name: 'Projem Akademi', text: 'Köklü liselerdeki gençler için beş yıllık, uzun soluklu eğitim ve gelişim programı.' },
+    { name: 'X10', text: 'Öğrenci ve mezunların öncülüğünde, farklı süre ve yoğunluklarda programlara katılım sağlayan esnek gençlik ağı.' },
+    { name: 'Halka', text: 'Okuma, sohbet ve kültür çalışmalarını öğrencilerin kendi okullarında yönettiği katılımcı model.' },
+  ] : [
+    { name: 'Projem Academy', text: 'A long-term, five-year education and development programme for students at established high schools.' },
+    { name: 'X10', text: 'A flexible youth network led by students and alumni, offering programmes at different lengths and levels of intensity.' },
+    { name: 'Halka', text: 'A participatory model in which students run reading, discussion and cultural circles in their own schools.' },
+  ];
+  const years = lang === 'tr' ? [
+    ['01', 'Temel', 'İnanç, metin okuma, şehir ve medeniyet üzerine güçlü bir başlangıç.'],
+    ['02', 'Derinleşme', 'Hadis, fıkıh, dinler ve Kur’an çalışmalarıyla düşünsel zemini genişletme.'],
+    ['03', 'Sorumluluk', 'Liderlik, hitabet, düşünce tarihi ve toplumsal hareketler üzerine çalışma.'],
+    ['04', 'Üretim', 'Proje yönetimi, felsefe ve coğrafya üzerinden fikri uygulamaya dönüştürme.'],
+    ['05', 'Ufuk', 'Sosyoloji, dünya coğrafyası ve örnek şahsiyetlerle daha geniş bir bakış kurma.'],
+  ] : [
+    ['01', 'Foundations', 'A strong beginning through belief, close reading, cities and civilisation.'],
+    ['02', 'Deepening', 'Broadening the intellectual ground through hadith, jurisprudence, religions and Qur’anic studies.'],
+    ['03', 'Responsibility', 'Work on leadership, public speaking, intellectual history and social movements.'],
+    ['04', 'Creation', 'Turning ideas into practice through project management, philosophy and geography.'],
+    ['05', 'Perspective', 'Building a wider outlook through sociology, world geography and exemplary figures.'],
+  ];
+  const methods = lang === 'tr' ? ['Yıllık 28 kitaplık okuma seçkisi', 'Yazı atölyeleri', 'Hitabet ve sunumlar', 'Vize ve final sınavları', 'Kamplar ve Türkiye gezileri', 'Performans ve gelişim takibi'] : ['An annual selection of 28 books', 'Writing workshops', 'Public speaking and presentations', 'Midterm and final assessments', 'Camps and journeys across Türkiye', 'Performance and development tracking'];
+  return <section className="institutional-page about-page"><InstitutionalIntro index="01" title={c.nav[0]} lead={lang === 'tr' ? 'Köklü liselerden başlayan, mezunlarla kuşaklar boyunca devam eden bir eğitim ve gelişim topluluğu.' : 'An education and development community that begins in established high schools and continues across generations through its alumni.'}/><div className="about-editorial"><div className="about-statement"><span>{lang === 'tr' ? '2007’DEN BUGÜNE' : 'SINCE 2007'}</span><strong>{lang === 'tr' ? 'Bir programdan fazlası; kuşaklar arasında devam eden bir bağ.' : 'More than a programme; a connection carried across generations.'}</strong></div><div className="about-copy">{paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div></div><div className="about-principles"><article><span>01</span><h2>{lang === 'tr' ? 'Çift kanatlı eğitim' : 'Whole-person education'}</h2></article><article><span>02</span><h2>{lang === 'tr' ? 'Gençlerin öncülüğü' : 'Youth leadership'}</h2></article><article><span>03</span><h2>{lang === 'tr' ? 'Mezunlarla süreklilik' : 'Alumni continuity'}</h2></article></div><section className="about-model" aria-labelledby="model-title"><header><span>02</span><div><p>{lang === 'tr' ? 'ORGANİZASYON MODELİ' : 'ORGANISATION MODEL'}</p><h2 id="model-title">{lang === 'tr' ? 'Üç yapı, ortak bir hedef.' : 'Three structures, one shared purpose.'}</h2></div></header><div>{initiatives.map((initiative, index) => <article key={initiative.name}><span>0{index + 1}</span><h3>{initiative.name}</h3><p>{initiative.text}</p></article>)}</div></section><section className="about-curriculum" aria-labelledby="curriculum-title"><header><span>03</span><div><p>{lang === 'tr' ? 'EĞİTİM MODELİ' : 'EDUCATION MODEL'}</p><h2 id="curriculum-title">{lang === 'tr' ? 'Beş yıllık gelişim çizgisi.' : 'A five-year development path.'}</h2></div></header><div className="curriculum-years">{years.map(([number, title, text]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div><div className="curriculum-methods">{methods.map(method => <span key={method}>{method}</span>)}</div></section></section>;
 }
 
 function ManagementPage({ c, lang }: { c: Copy; lang: Language }) {
-  const departments = lang === 'tr' ? ['Program ve Eğitim', 'Organizasyon ve Kamplar', 'İletişim ve Kurumsal İlişkiler', 'Mezun ve Mensup İlişkileri'] : ['Programme and Education', 'Organisation and Camps', 'Communications and Institutional Relations', 'Alumni and Member Relations'];
-  const orbitItems = [lang === 'tr' ? 'Genel Koordinasyon' : 'General Coordination', lang === 'tr' ? 'Yürütme Kurulu' : 'Executive Board', ...departments];
+  const orbitItems = lang === 'tr' ? ['Genel Koordinasyon', 'Akademi Koordinasyonu', 'Program ve Eğitim', 'Organizasyon ve Kamplar', 'Tanıtım ve Medya', 'Mezun İlişkileri'] : ['General Coordination', 'Academy Coordination', 'Programme and Education', 'Organisation and Camps', 'Communications and Media', 'Alumni Relations'];
   return <section className="institutional-page management-page"><InstitutionalIntro index="02" title={c.nav[2]} lead={lang === 'tr' ? 'Sorumluluğu paylaşan, programları birlikte yürüten bir yönetim yapısı.' : 'A management structure that shares responsibility and runs programmes together.'}/><div className="org-orbit" aria-label={lang === 'tr' ? 'Dairesel yönetim organizasyon şeması' : 'Circular management organisation chart'}><svg viewBox="0 0 1000 760" fill="none" aria-hidden="true"><ellipse cx="500" cy="380" rx="335" ry="305"/><path d="M500 380V75M500 380 830 225M500 380 800 610M500 380V690M500 380 200 610M500 380 170 225"/></svg><article className="org-circle org-center"><span>01</span><p>{lang === 'tr' ? 'Proje Başkanı' : 'Project Chair'}</p><strong>[{lang === 'tr' ? 'Ad Soyad' : 'Full Name'}]</strong><Mark/></article>{orbitItems.map((item, i) => <article className={`org-circle org-satellite org-position-${i}`} key={item}><span>{String(i + 2).padStart(2, '0')}</span><p>{item}</p><strong>[{lang === 'tr' ? 'Ad Soyad' : 'Full Name'}]</strong></article>)}</div></section>;
 }
 
