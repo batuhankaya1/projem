@@ -67,13 +67,41 @@ function LinkedInMark() {
 const menuPageKeys: PageKey[] = ['about', 'team', 'contact'];
 function Header({ lang, page, c }: { lang: Language; page?: PageKey; c: Copy }) {
   const [menu, setMenu] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const [brandVisible, setBrandVisible] = useState(true);
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let direction = 0;
+    let travel = 0;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const y = window.scrollY;
+      const delta = y - lastY;
+      const nextDirection = delta === 0 ? direction : delta > 0 ? 1 : -1;
+      if (nextDirection !== direction) travel = 0;
+      travel += Math.abs(delta);
+      direction = nextDirection;
+      setHasScrolled(y > 40);
+      if (y < 90) setBrandVisible(true);
+      else if (travel > 18) {
+        setBrandVisible(direction < 0);
+        travel = 0;
+      }
+      lastY = y;
+    };
+    const schedule = () => { if (!raf) raf = window.requestAnimationFrame(update); };
+    update();
+    window.addEventListener('scroll', schedule, { passive: true });
+    return () => { window.removeEventListener('scroll', schedule); if (raf) window.cancelAnimationFrame(raf); };
+  }, []);
   function remember(language: Language) { try { localStorage.setItem('living-line-language', language); } catch {} }
   const menuNotes = lang === 'tr'
     ? ['Hikâyemiz ve yaklaşımımız', 'Ekip ve gönüllüler', 'Birlikte çalışalım']
     : ['Our story and approach', 'Team and volunteers', 'Work with us'];
   return <>
     <a className="skip-link" href="#main">{c.skipNav}</a>
-    <header className="site-header route-header">
+    <header className={`site-header route-header${hasScrolled ? ' route-header-scrolled' : ''}${brandVisible ? '' : ' route-header-brand-hidden'}`}>
       <a href={`/${lang}`} className="brand route-brand" aria-label={`${c.name} — ${c.home}`}><BrandLogo/></a>
       <Sheet open={menu} onOpenChange={setMenu}>
         <SheetTrigger asChild><button className="route-menu-trigger" aria-label={c.menu}><span>{lang === 'tr' ? 'Menü' : 'Menu'}</span><span className="route-menu-icon" aria-hidden="true"><i/><i/></span></button></SheetTrigger>
