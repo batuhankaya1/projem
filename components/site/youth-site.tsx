@@ -256,7 +256,20 @@ const programCards = {
 };
 
 function StatsBar({ lang }: { lang: Language }) {
-  return <section className="stats-bar" aria-labelledby="stats-title"><div className="stats-heading"><span>01</span><h2 id="stats-title">{lang === 'tr' ? 'Sayılarla Projem' : 'Projem in numbers'}</h2></div><dl><div><dt>{lang === 'tr' ? 'Güncel mezun' : 'Current alumni'}</dt><dd>110</dd></div><div><dt>{lang === 'tr' ? 'Güncel mensup' : 'Current members'}</dt><dd>40</dd></div></dl></section>;
+  const facts = lang === 'tr' ? [
+    { value: '2007', label: 'Başlangıç yılı' },
+    { value: '5', suffix: 'yıl', label: 'Eğitim programı' },
+    { value: '28', label: 'Yıllık kitap seçkisi' },
+    { value: '15', label: 'Köklü lise' },
+    { value: '1000+', label: 'Etki alanındaki genç' },
+  ] : [
+    { value: '2007', label: 'Founded' },
+    { value: '5', suffix: 'years', label: 'Education programme' },
+    { value: '28', label: 'Books each year' },
+    { value: '15', label: 'Established high schools' },
+    { value: '1000+', label: 'Young people in our reach' },
+  ];
+  return <section className="stats-bar" aria-labelledby="stats-title"><header className="stats-heading"><span>01</span><div><h2 id="stats-title">{lang === 'tr' ? 'Sayılarla Projem' : 'Projem in numbers'}</h2><p>{lang === 'tr' ? 'Güncel topluluk verileri ve yirmi yıllık birikimin ölçülebilir izleri.' : 'Current community figures and the measurable traces of two decades.'}</p></div></header><div className="stats-grid"><dl className="stats-current"><div><dt>{lang === 'tr' ? 'Güncel mezun' : 'Current alumni'}</dt><dd>110</dd></div><div><dt>{lang === 'tr' ? 'Güncel mensup' : 'Current members'}</dt><dd>40</dd></div></dl><dl className="stats-evidence">{facts.map(fact => <div key={fact.label}><dd>{fact.value}{fact.suffix && <small>{fact.suffix}</small>}</dd><dt>{fact.label}</dt></div>)}</dl></div></section>;
 }
 
 function ProgramsShowcase({ lang }: { lang: Language }) {
