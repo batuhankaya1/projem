@@ -242,16 +242,18 @@ function Story({ c, lang }: { c: Copy; lang: Language }) {
 
 const programCards = {
   tr: [
-    { title: 'Dersler', detail: 'Beş yıla yayılan; düşünce, kültür, liderlik ve proje üretimini birlikte ele alan eğitim çizgisi.' },
-    { title: 'Kamplar', detail: 'Hazırlık, yoğunlaşma ve değerlendirme dönemlerini birlikte yaşama deneyimiyle buluşturan kamplar.' },
-    { title: 'Hitabet', detail: 'Düşünceyi açık, güçlü ve sorumlu biçimde ifade etmeye odaklanan uygulamalı çalışmalar.' },
-    { title: 'Türkiye Gezisi', detail: 'Şehirleri, kültürel mirası ve farklı hayatları yerinde tanımaya açılan öğrenme rotaları.' },
+    { title: 'Eğitimler', meta: 'BEŞ YILLIK PROGRAM', detail: 'Kitap okumaları, hitabet, yazı, liderlik ve düşünce çalışmalarını bir araya getiren uzun soluklu eğitim yolculuğu.' },
+    { title: 'Türkiye Gezisi', meta: 'KÜLTÜR YOLCULUĞU', detail: 'Her yıl farklı şehirlerde, sekiz yılda Türkiye’nin tamamını tanımayı hedefleyen kültür ve medeniyet yolculuğu.' },
+    { title: 'Hitabet Yarışması', meta: 'YILLIK YARIŞMA', detail: 'Köklü liselerden gençlerin topluluk önünde konuşma ve düşüncelerini etkili biçimde ifade etme becerilerini geliştirdiği yarışma.' },
+    { title: 'Projem Futbol Ligi', meta: 'TOPLULUK LİGİ', detail: 'Öğrenci, mezun ve mensupları aynı sahada buluşturarak ekip ruhunu ve kuşaklar arası bağı güçlendiren lig.' },
+    { title: 'Yarıyıl & Yaz Kampları', meta: 'DÖNEMSEL PROGRAM', detail: 'İhtiyaçlara göre hazırlanan; akademik, kişisel ve sosyal gelişimi birlikte destekleyen yoğun kamp programları.' },
   ],
   en: [
-    { title: 'Classes', detail: 'A five-year learning path connecting thought, culture, leadership and project development.' },
-    { title: 'Camps', detail: 'Preparation, intensive learning and evaluation periods combined with the experience of living together.' },
-    { title: 'Public Speaking', detail: 'Practical work focused on expressing ideas with clarity, confidence and responsibility.' },
-    { title: 'Türkiye Journey', detail: 'Learning routes that encounter cities, cultural heritage and different lives first-hand.' },
+    { title: 'Education', meta: 'FIVE-YEAR PROGRAMME', detail: 'A long-term education journey bringing together guided reading, public speaking, writing, leadership and intellectual development.' },
+    { title: 'Türkiye Journey', meta: 'CULTURAL JOURNEY', detail: 'An annual journey through different cities, designed to encounter the whole of Türkiye over eight years.' },
+    { title: 'Public Speaking Competition', meta: 'ANNUAL COMPETITION', detail: 'A competition helping students from established high schools speak before an audience and express their ideas with confidence.' },
+    { title: 'Projem Football League', meta: 'COMMUNITY LEAGUE', detail: 'A league bringing students, alumni and members onto the same field to strengthen teamwork and intergenerational ties.' },
+    { title: 'Midyear & Summer Camps', meta: 'SEASONAL PROGRAMME', detail: 'Intensive camps designed around current needs, supporting academic, personal and social development together.' },
   ],
 };
 
@@ -295,8 +297,8 @@ function StatsBar({ lang }: { lang: Language }) {
 
 function ProgramsShowcase({ lang }: { lang: Language }) {
   const cards = programCards[lang];
-  const cardGroup = (hidden = false) => <div className="program-film-group" aria-hidden={hidden || undefined}>{cards.map((program, i) => <article className="program-card" key={`${hidden ? 'duplicate-' : ''}${program.title}`}><div className={`program-card-image program-image-${i}`} role="img" aria-label={program.title}/><div className="program-card-copy"><div className="program-card-meta"><span>{String(i + 1).padStart(2, '0')}</span><span>{lang === 'tr' ? 'YILLIK PROGRAM' : 'ANNUAL PROGRAMME'}</span></div><h3>{program.title}</h3><p>{program.detail}</p></div></article>)}</div>;
-  return <section className="programs-showcase" aria-labelledby="programs-title"><header className="programs-heading"><div><span>03 / 04</span><h2 id="programs-title">{lang === 'tr' ? 'Programlarımız' : 'Our programmes'}</h2></div><p>{lang === 'tr' ? 'Yıl boyunca, birlikte.' : 'Together, throughout the year.'}</p></header><div className="program-film" aria-label={lang === 'tr' ? 'Programlar' : 'Programmes'}><div className="program-film-track">{cardGroup()}{cardGroup(true)}</div></div></section>;
+  const cardGroup = (hidden = false) => <div className="program-film-group" aria-hidden={hidden || undefined}>{cards.map((program, i) => <article className="program-card" key={`${hidden ? 'duplicate-' : ''}${program.title}`}><div className={`program-card-image program-image-${i}`} role="img" aria-label={program.title}/><div className="program-card-copy"><div className="program-card-meta"><span>{String(i + 1).padStart(2, '0')}</span><span>{program.meta}</span></div><h3>{program.title}</h3><p>{program.detail}</p></div></article>)}</div>;
+  return <section className="programs-showcase" aria-labelledby="programs-title"><header className="programs-heading"><div><span>03 / 05</span><h2 id="programs-title">{lang === 'tr' ? <>Programlarımız<br/><em>& etkinliklerimiz</em></> : <>Our programmes<br/><em>& events</em></>}</h2></div><p>{lang === 'tr' ? 'Yıl boyunca, birlikte.' : 'Together, throughout the year.'}</p></header><div className="program-film" aria-label={lang === 'tr' ? 'Programlar ve etkinlikler' : 'Programmes and events'}><div className="program-film-track">{cardGroup()}{cardGroup(true)}</div></div></section>;
 }
 
 function Detail({ page, c, lang }: { page: PageKey; c: Copy; lang: Language }) {

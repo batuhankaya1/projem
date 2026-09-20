@@ -300,6 +300,7 @@
 .programs-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin:0 4.2% clamp(42px,5vw,72px)}
 .programs-heading>div>span{display:block;margin-bottom:18px;color:var(--orange);font-size:11px;letter-spacing:.18em}
 .programs-heading h2{margin:0;font-size:clamp(50px,7.4vw,118px);font-weight:400;letter-spacing:-.07em;line-height:.82}
+.programs-heading h2 em{color:var(--orange);font-family:Georgia,'Times New Roman',serif;font-size:.63em;font-weight:400}
 .programs-heading>p{margin:0 0 6px;color:var(--muted-ink);font-size:14px;letter-spacing:.09em;text-transform:uppercase}
 .program-film{position:relative;padding:34px 0;background:#173f35}
 .program-film::before,.program-film::after{content:"";position:absolute;z-index:2;left:0;right:0;height:14px;background:repeating-linear-gradient(90deg,transparent 0 18px,#ebece1 18px 31px,transparent 31px 49px)}
@@ -309,7 +310,9 @@
 .program-film-group{display:flex;gap:18px;padding-right:18px}
 .program-card{width:clamp(286px,25vw,390px);flex:none;background:#f7f6f0;color:var(--ink)}
 .program-card-image{aspect-ratio:3/4;background-image:linear-gradient(180deg,transparent 58%,rgba(13,36,30,.22)),url('/images/programs-contact-sheet.png');background-repeat:no-repeat;background-size:400% 100%;background-color:#c8c9bb}
-.program-image-0{background-position:0 0}.program-image-1{background-position:33.333% 0}.program-image-2{background-position:66.666% 0}.program-image-3{background-position:100% 0}
+.program-image-0{background-position:0 0}.program-image-1{background-position:100% 0}.program-image-2{background-position:66.666% 0}.program-image-4{background-position:33.333% 0}
+.program-image-3{display:grid;place-items:end start;padding:25px;background-image:linear-gradient(90deg,transparent 49.7%,rgba(255,255,255,.7) 49.7% 50.3%,transparent 50.3%),radial-gradient(circle at 50% 50%,transparent 0 13%,rgba(255,255,255,.72) 13.3% 14%,transparent 14.3%),linear-gradient(145deg,#183e33,#4a765b);background-size:100% 100%;background-position:center}
+.program-image-3:after{content:'PROJEM FUTBOL LİGİ';max-width:190px;color:rgba(255,255,255,.86);font-size:12px;letter-spacing:.16em;line-height:1.45}
 .program-card-copy{min-height:218px;padding:24px 25px 28px}
 .program-card-meta{display:flex;justify-content:space-between;gap:20px;padding-bottom:18px;border-bottom:1px solid var(--rule);color:#758078;font-size:10px;letter-spacing:.13em}
 .program-card h3{margin:23px 0 12px;font-size:clamp(28px,2.6vw,42px);font-weight:400;letter-spacing:-.045em;line-height:1}
