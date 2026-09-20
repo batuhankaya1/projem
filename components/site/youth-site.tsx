@@ -255,6 +255,31 @@ const programCards = {
   ],
 };
 
+function WhoWeAre({ lang }: { lang: Language }) {
+  return <section className="home-about" aria-labelledby="home-about-title">
+    <header className="home-about-heading">
+      <span>01 / {lang === 'tr' ? 'BİZ KİMİZ' : 'WHO WE ARE'}</span>
+      <p>{lang === 'tr' ? 'Gönüllülükle başlayan, kuşaklar boyunca devam eden bir eğitim yolculuğu.' : 'An educational journey founded on volunteering and carried forward across generations.'}</p>
+    </header>
+    <div className="home-about-body">
+      <div className="home-about-title-wrap">
+        <p>{lang === 'tr' ? '2007’DEN BUGÜNE' : 'SINCE 2007'}</p>
+        <h2 id="home-about-title">{lang === 'tr' ? <>Bir okul,<br/>bir ekol.</> : <>A school,<br/>a tradition.</>}</h2>
+      </div>
+      <div className="home-about-copy">
+        <p>{lang === 'tr' ? 'Projem; Türkiye’nin köklü liselerinde öğrenim gören gençleri, gönüllülük esaslı beş yıllık bir eğitim ve gelişim yolculuğunda buluşturan bir gençlik çalışmasıdır.' : 'Projem is a volunteer-led youth initiative that brings students from Türkiye’s established high schools together through a five-year education and development journey.'}</p>
+        <p>{lang === 'tr' ? 'Akademik ve entelektüel gelişimi millî ve manevi değerlerle bir araya getirir. Mezunların yeni kuşaklara rehberlik ettiği bu model, Projem’i bir programdan öte yaşayan bir topluluğa dönüştürür.' : 'It connects academic and intellectual development with shared values. With alumni guiding each new generation, Projem grows beyond a programme into a living community.'}</p>
+        <div className="home-about-principles" aria-label={lang === 'tr' ? 'Temel yaklaşımımız' : 'Our core approach'}>
+          <span>{lang === 'tr' ? 'Çift kanatlı eğitim' : 'Whole-person education'}</span>
+          <span>{lang === 'tr' ? 'Gençlerin öncülüğü' : 'Youth leadership'}</span>
+          <span>{lang === 'tr' ? 'Mezunlarla süreklilik' : 'Alumni continuity'}</span>
+        </div>
+        <a className="home-about-link" href={`/${lang}/about`}><span>{lang === 'tr' ? 'Hikâyemizi keşfedin' : 'Discover our story'}</span><i/><ArrowUpRight/></a>
+      </div>
+    </div>
+  </section>;
+}
+
 function StatsBar({ lang }: { lang: Language }) {
   const impact = lang === 'tr' ? [
     { value: '10.000+', label: 'İstanbul ve Türkiye genelinde 15 köklü lisede ulaşılan genç' },
@@ -265,13 +290,13 @@ function StatsBar({ lang }: { lang: Language }) {
     { value: 'Thousands', label: 'Students and alumni at leading universities' },
     { value: 'Thousands', label: 'Professionals working across Türkiye and the world' },
   ];
-  return <section className="stats-bar" aria-labelledby="stats-title"><header className="stats-heading"><span>01</span><div><h2 id="stats-title">{lang === 'tr' ? 'Sayılarla Projem' : 'Projem in numbers'}</h2><p>{lang === 'tr' ? '20. yıl sunumunda yer alan öğrenci, mezun ve etki verileri.' : 'Student, alumni and impact figures from the 20th-year presentation.'}</p></div></header><div className="stats-grid"><dl className="stats-current"><div><dd>75</dd><dt>{lang === 'tr' ? 'Projem lise öğrencisi' : 'Projem high-school students'}</dt></div><div><dd>108</dd><dt>{lang === 'tr' ? 'Projem mezunu' : 'Projem alumni'}</dt><p>{lang === 'tr' ? 'Mühendislik %69 · Sağlık %12 · Sosyal Bilimler %8 · Diğer %11' : 'Engineering 69% · Health 12% · Social Sciences 8% · Other 11%'}</p></div><div><dd>12</dd><dt>{lang === 'tr' ? 'Her yıl ortalama mezun' : 'Average graduates each year'}</dt><p>{lang === 'tr' ? 'Programı tamamlayarak üniversite ve yönetim ekibine dâhil olan mezunlar' : 'Graduates completing the programme and joining university and the management team'}</p></div><div><dd>200+</dd><dt>{lang === 'tr' ? 'X10 ile her yıl ulaşılan genç' : 'Young people reached by X10 each year'}</dt><p>{lang === 'tr' ? 'Projem öğrencilerinin dışında ulaşılan gençler' : 'Young people reached beyond Projem’s own students'}</p></div></dl><div className="stats-impact"><header><span>{lang === 'tr' ? 'ETKİ VE FAALİYET ALANIMIZ' : 'OUR IMPACT AND REACH'}</span></header><dl className="stats-evidence">{impact.map(fact => <div key={fact.label}><dd>{fact.value}</dd><dt>{fact.label}</dt></div>)}</dl></div></div></section>;
+  return <section className="stats-bar" aria-labelledby="stats-title"><header className="stats-heading"><span>02</span><div><h2 id="stats-title">{lang === 'tr' ? 'Sayılarla Projem' : 'Projem in numbers'}</h2><p>{lang === 'tr' ? '20. yıl sunumunda yer alan öğrenci, mezun ve etki verileri.' : 'Student, alumni and impact figures from the 20th-year presentation.'}</p></div></header><div className="stats-grid"><dl className="stats-current"><div><dd>75</dd><dt>{lang === 'tr' ? 'Projem lise öğrencisi' : 'Projem high-school students'}</dt></div><div><dd>108</dd><dt>{lang === 'tr' ? 'Projem mezunu' : 'Projem alumni'}</dt><p>{lang === 'tr' ? 'Mühendislik %69 · Sağlık %12 · Sosyal Bilimler %8 · Diğer %11' : 'Engineering 69% · Health 12% · Social Sciences 8% · Other 11%'}</p></div><div><dd>12</dd><dt>{lang === 'tr' ? 'Her yıl ortalama mezun' : 'Average graduates each year'}</dt><p>{lang === 'tr' ? 'Programı tamamlayarak üniversite ve yönetim ekibine dâhil olan mezunlar' : 'Graduates completing the programme and joining university and the management team'}</p></div><div><dd>200+</dd><dt>{lang === 'tr' ? 'X10 ile her yıl ulaşılan genç' : 'Young people reached by X10 each year'}</dt><p>{lang === 'tr' ? 'Projem öğrencilerinin dışında ulaşılan gençler' : 'Young people reached beyond Projem’s own students'}</p></div></dl><div className="stats-impact"><header><span>{lang === 'tr' ? 'ETKİ VE FAALİYET ALANIMIZ' : 'OUR IMPACT AND REACH'}</span></header><dl className="stats-evidence">{impact.map(fact => <div key={fact.label}><dd>{fact.value}</dd><dt>{fact.label}</dt></div>)}</dl></div></div></section>;
 }
 
 function ProgramsShowcase({ lang }: { lang: Language }) {
   const cards = programCards[lang];
   const cardGroup = (hidden = false) => <div className="program-film-group" aria-hidden={hidden || undefined}>{cards.map((program, i) => <article className="program-card" key={`${hidden ? 'duplicate-' : ''}${program.title}`}><div className={`program-card-image program-image-${i}`} role="img" aria-label={program.title}/><div className="program-card-copy"><div className="program-card-meta"><span>{String(i + 1).padStart(2, '0')}</span><span>{lang === 'tr' ? 'YILLIK PROGRAM' : 'ANNUAL PROGRAMME'}</span></div><h3>{program.title}</h3><p>{program.detail}</p></div></article>)}</div>;
-  return <section className="programs-showcase" aria-labelledby="programs-title"><header className="programs-heading"><div><span>02 / 04</span><h2 id="programs-title">{lang === 'tr' ? 'Programlarımız' : 'Our programmes'}</h2></div><p>{lang === 'tr' ? 'Yıl boyunca, birlikte.' : 'Together, throughout the year.'}</p></header><div className="program-film" aria-label={lang === 'tr' ? 'Programlar' : 'Programmes'}><div className="program-film-track">{cardGroup()}{cardGroup(true)}</div></div></section>;
+  return <section className="programs-showcase" aria-labelledby="programs-title"><header className="programs-heading"><div><span>03 / 04</span><h2 id="programs-title">{lang === 'tr' ? 'Programlarımız' : 'Our programmes'}</h2></div><p>{lang === 'tr' ? 'Yıl boyunca, birlikte.' : 'Together, throughout the year.'}</p></header><div className="program-film" aria-label={lang === 'tr' ? 'Programlar' : 'Programmes'}><div className="program-film-track">{cardGroup()}{cardGroup(true)}</div></div></section>;
 }
 
 function Detail({ page, c, lang }: { page: PageKey; c: Copy; lang: Language }) {
@@ -365,5 +390,5 @@ export function YouthSite({ lang, page }: { lang: Language; page?: PageKey }) {
   const [allowed,setAllowed]=useState(() => { try { return typeof window !== 'undefined' && localStorage.getItem('living-line-social')==='allowed'; } catch { return false; } }); const [privacy,setPrivacy]=useState(false);
   useEffect(()=> { document.documentElement.lang=lang; try { localStorage.setItem('living-line-language', lang); } catch {} },[lang]);
   const toggleConsent=()=>setAllowed(previous=> {const next=!previous; try{localStorage.setItem('living-line-social',next?'allowed':'blocked');}catch{} return next;});
-  return <div id="top" className="site-shell"><PageTransition lang={lang}/><Header c={c} lang={lang} page={page}/><main id="main" tabIndex={-1}>{page ? <Detail page={page} lang={lang} c={c}/> : <><Story c={c} lang={lang}/><StatsBar lang={lang}/><ProgramsShowcase lang={lang}/></>}</main><Footer c={c} lang={lang} openPrivacy={()=>setPrivacy(true)}/><Dialog open={privacy} onOpenChange={setPrivacy}><DialogContent className="privacy-dialog" showCloseButton={false}><div className="privacy-heading"><Mark/><Button variant="ghost" size="icon" aria-label={c.close} onClick={()=>setPrivacy(false)}><X/></Button></div><DialogTitle>{c.privacyTitle}</DialogTitle><DialogDescription>{c.privacyText}</DialogDescription><p role="status" className="privacy-status">{allowed ? c.privacyAllowed : c.privacyBlocked}</p><Button className="primary-action" onClick={toggleConsent}>{allowed ? c.socialRevoke : c.socialConsent}</Button></DialogContent></Dialog></div>;
+  return <div id="top" className="site-shell"><PageTransition lang={lang}/><Header c={c} lang={lang} page={page}/><main id="main" tabIndex={-1}>{page ? <Detail page={page} lang={lang} c={c}/> : <><Story c={c} lang={lang}/><WhoWeAre lang={lang}/><StatsBar lang={lang}/><ProgramsShowcase lang={lang}/></>}</main><Footer c={c} lang={lang} openPrivacy={()=>setPrivacy(true)}/><Dialog open={privacy} onOpenChange={setPrivacy}><DialogContent className="privacy-dialog" showCloseButton={false}><div className="privacy-heading"><Mark/><Button variant="ghost" size="icon" aria-label={c.close} onClick={()=>setPrivacy(false)}><X/></Button></div><DialogTitle>{c.privacyTitle}</DialogTitle><DialogDescription>{c.privacyText}</DialogDescription><p role="status" className="privacy-status">{allowed ? c.privacyAllowed : c.privacyBlocked}</p><Button className="primary-action" onClick={toggleConsent}>{allowed ? c.socialRevoke : c.socialConsent}</Button></DialogContent></Dialog></div>;
 }
