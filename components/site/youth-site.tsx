@@ -256,22 +256,16 @@ const programCards = {
 };
 
 function StatsBar({ lang }: { lang: Language }) {
-  const facts = lang === 'tr' ? [
-    { value: '5', suffix: 'yıl', label: 'Projem Akademi eğitim programı' },
-    { value: '28', label: 'Yıllık kitap seçkisi' },
-    { value: '12', label: 'Yıllık ortalama mezun' },
-    { value: '200+', label: 'X10 ile yıllık ulaşılan genç' },
-    { value: '15', label: 'Köklü lise' },
-    { value: '1000+', label: 'Toplam etki alanındaki genç' },
+  const impact = lang === 'tr' ? [
+    { value: '10.000+', label: 'İstanbul ve Türkiye genelinde 15 köklü lisede ulaşılan genç' },
+    { value: 'Binlerce', label: 'Seçkin üniversitelerde öğrenim gören veya mezun genç' },
+    { value: 'Binlerce', label: 'Türkiye’de ve dünyada kariyer sahibi profesyonel' },
   ] : [
-    { value: '5', suffix: 'years', label: 'Projem Academy programme' },
-    { value: '28', label: 'Books each year' },
-    { value: '12', label: 'Average graduates each year' },
-    { value: '200+', label: 'Young people reached by X10 each year' },
-    { value: '15', label: 'Established high schools' },
-    { value: '1000+', label: 'Young people in our total reach' },
+    { value: '10,000+', label: 'Young people reached across 15 established high schools in Istanbul and Türkiye' },
+    { value: 'Thousands', label: 'Students and alumni at leading universities' },
+    { value: 'Thousands', label: 'Professionals working across Türkiye and the world' },
   ];
-  return <section className="stats-bar" aria-labelledby="stats-title"><header className="stats-heading"><span>01</span><div><h2 id="stats-title">{lang === 'tr' ? 'Sayılarla Projem' : 'Projem in numbers'}</h2><p>{lang === 'tr' ? 'Güncel topluluk verileri ve yirmi yıllık birikimin ölçülebilir izleri.' : 'Current community figures and the measurable traces of two decades.'}</p></div></header><div className="stats-grid"><dl className="stats-current"><div><dt>{lang === 'tr' ? 'Projem lise öğrencisi' : 'Projem high-school students'}</dt><dd>75</dd></div><div><dt>{lang === 'tr' ? 'Güncel Projem mezunu' : 'Current Projem alumni'}</dt><dd>110</dd></div><div><dt>{lang === 'tr' ? 'Güncel mensup' : 'Current members'}</dt><dd>40</dd></div></dl><dl className="stats-evidence">{facts.map(fact => <div key={fact.label}><dd>{fact.value}{fact.suffix && <small>{fact.suffix}</small>}</dd><dt>{fact.label}</dt></div>)}</dl></div></section>;
+  return <section className="stats-bar" aria-labelledby="stats-title"><header className="stats-heading"><span>01</span><div><h2 id="stats-title">{lang === 'tr' ? 'Sayılarla Projem' : 'Projem in numbers'}</h2><p>{lang === 'tr' ? '20. yıl sunumunda yer alan öğrenci, mezun ve etki verileri.' : 'Student, alumni and impact figures from the 20th-year presentation.'}</p></div></header><div className="stats-grid"><dl className="stats-current"><div><dd>75</dd><dt>{lang === 'tr' ? 'Projem lise öğrencisi' : 'Projem high-school students'}</dt></div><div><dd>108</dd><dt>{lang === 'tr' ? 'Projem mezunu' : 'Projem alumni'}</dt><p>{lang === 'tr' ? 'Mühendislik %69 · Sağlık %12 · Sosyal Bilimler %8 · Diğer %11' : 'Engineering 69% · Health 12% · Social Sciences 8% · Other 11%'}</p></div><div><dd>12</dd><dt>{lang === 'tr' ? 'Her yıl ortalama mezun' : 'Average graduates each year'}</dt><p>{lang === 'tr' ? 'Programı tamamlayarak üniversite ve yönetim ekibine dâhil olan mezunlar' : 'Graduates completing the programme and joining university and the management team'}</p></div><div><dd>200+</dd><dt>{lang === 'tr' ? 'X10 ile her yıl ulaşılan genç' : 'Young people reached by X10 each year'}</dt><p>{lang === 'tr' ? 'Projem öğrencilerinin dışında ulaşılan gençler' : 'Young people reached beyond Projem’s own students'}</p></div></dl><div className="stats-impact"><header><span>{lang === 'tr' ? 'ETKİ VE FAALİYET ALANIMIZ' : 'OUR IMPACT AND REACH'}</span></header><dl className="stats-evidence">{impact.map(fact => <div key={fact.label}><dd>{fact.value}</dd><dt>{fact.label}</dt></div>)}</dl></div></div></section>;
 }
 
 function ProgramsShowcase({ lang }: { lang: Language }) {
