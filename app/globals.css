@@ -487,12 +487,12 @@
 .footer-social-compact{min-width:315px}
 .footer-social-compact>p{margin:0 0 14px;color:#aeb2b3;font-size:11px;letter-spacing:.13em;text-transform:uppercase}
 .footer-social-compact>div{display:flex;flex-wrap:wrap;gap:8px}
-.footer-social-chip{height:42px;display:inline-flex;align-items:center;gap:9px;padding:4px 13px 4px 4px;border:1px solid #686e70;border-radius:999px;color:var(--paper);font-size:12px;transition:border-color .2s,color .2s,transform .2s}
-.footer-social-chip>span{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:#434a4c}
+.footer-social-chip{height:42px;display:inline-flex;align-items:center;gap:9px;padding:4px 13px 4px 4px;border:1px solid rgba(255,255,255,.46);border-radius:999px;background:rgba(255,255,255,.04);color:#fff;font-size:12px;transition:border-color .2s,color .2s,background .2s,transform .2s}
+.footer-social-chip>span{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:#fff;color:var(--ink)}
 .footer-social-chip svg{width:15px;height:15px;stroke:currentColor;stroke-width:1.7}
 .footer-social-chip b{font-weight:400}
-a.footer-social-chip:hover{border-color:var(--orange);color:var(--orange);transform:translateY(-2px)}
-.footer-social-chip.is-disabled{color:#8e9394;opacity:.7}
+a.footer-social-chip:hover{border-color:#fff;background:#fff;color:var(--ink);transform:translateY(-2px)}
+.footer-social-chip.is-disabled{color:#fff;opacity:1}
 @media(max-width:760px){
   .footer-vision{min-height:130px}
   .footer-brand .brand-logo-image{height:50px}
