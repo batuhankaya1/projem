@@ -13,6 +13,48 @@ function Mark({ className = '' }: { className?: string }) {
 function BrandLogo({ className = '' }: { className?: string }) {
   return <img className={`brand-logo-image ${className}`} src="/images/projem-main-logo-transparent.png" alt="Projem Lider Gençlik" width="1921" height="819"/>;
 }
+function PageTransition({ lang }: { lang: Language }) {
+  const [phase, setPhase] = useState<'entering' | 'hidden' | 'leaving'>('entering');
+  const navigating = useRef(false);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const entranceTimer = window.setTimeout(() => setPhase('hidden'), reducedMotion ? 100 : 620);
+    const resetAfterHistoryNavigation = (event: PageTransitionEvent) => {
+      if (!event.persisted) return;
+      navigating.current = false;
+      setPhase('hidden');
+    };
+    const handleNavigation = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || navigating.current) return;
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const link = target.closest<HTMLAnchorElement>('a[href]');
+      if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+      const destination = new URL(link.href, window.location.href);
+      if (destination.origin !== window.location.origin) return;
+      const current = new URL(window.location.href);
+      if (destination.pathname === current.pathname && destination.search === current.search) return;
+
+      event.preventDefault();
+      navigating.current = true;
+      setPhase('leaving');
+      window.setTimeout(() => window.location.assign(destination.href), reducedMotion ? 60 : 430);
+    };
+
+    document.addEventListener('click', handleNavigation, true);
+    window.addEventListener('pageshow', resetAfterHistoryNavigation);
+    return () => {
+      window.clearTimeout(entranceTimer);
+      document.removeEventListener('click', handleNavigation, true);
+      window.removeEventListener('pageshow', resetAfterHistoryNavigation);
+    };
+  }, []);
+
+  return <div className={`page-transition page-transition-${phase}`} aria-hidden="true"><div className="page-transition-inner"><BrandLogo/><div className="page-transition-line"><i/></div><span>{lang === 'tr' ? '2007’den bugüne' : 'From 2007 to today'}</span></div></div>;
+}
 function InstagramMark() {
   return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>;
 }
@@ -242,5 +284,5 @@ export function YouthSite({ lang, page }: { lang: Language; page?: PageKey }) {
   const [allowed,setAllowed]=useState(() => { try { return typeof window !== 'undefined' && localStorage.getItem('living-line-social')==='allowed'; } catch { return false; } }); const [privacy,setPrivacy]=useState(false);
   useEffect(()=> { document.documentElement.lang=lang; try { localStorage.setItem('living-line-language', lang); } catch {} },[lang]);
   const toggleConsent=()=>setAllowed(previous=> {const next=!previous; try{localStorage.setItem('living-line-social',next?'allowed':'blocked');}catch{} return next;});
-  return <div id="top" className="site-shell"><Header c={c} lang={lang} page={page}/><main id="main" tabIndex={-1}>{page ? <Detail page={page} lang={lang} c={c}/> : <><Story c={c} lang={lang}/><StatsBar lang={lang}/><ProgramsShowcase lang={lang}/></>}</main><Footer c={c} lang={lang} openPrivacy={()=>setPrivacy(true)}/><Dialog open={privacy} onOpenChange={setPrivacy}><DialogContent className="privacy-dialog" showCloseButton={false}><div className="privacy-heading"><Mark/><Button variant="ghost" size="icon" aria-label={c.close} onClick={()=>setPrivacy(false)}><X/></Button></div><DialogTitle>{c.privacyTitle}</DialogTitle><DialogDescription>{c.privacyText}</DialogDescription><p role="status" className="privacy-status">{allowed ? c.privacyAllowed : c.privacyBlocked}</p><Button className="primary-action" onClick={toggleConsent}>{allowed ? c.socialRevoke : c.socialConsent}</Button></DialogContent></Dialog></div>;
+  return <div id="top" className="site-shell"><PageTransition lang={lang}/><Header c={c} lang={lang} page={page}/><main id="main" tabIndex={-1}>{page ? <Detail page={page} lang={lang} c={c}/> : <><Story c={c} lang={lang}/><StatsBar lang={lang}/><ProgramsShowcase lang={lang}/></>}</main><Footer c={c} lang={lang} openPrivacy={()=>setPrivacy(true)}/><Dialog open={privacy} onOpenChange={setPrivacy}><DialogContent className="privacy-dialog" showCloseButton={false}><div className="privacy-heading"><Mark/><Button variant="ghost" size="icon" aria-label={c.close} onClick={()=>setPrivacy(false)}><X/></Button></div><DialogTitle>{c.privacyTitle}</DialogTitle><DialogDescription>{c.privacyText}</DialogDescription><p role="status" className="privacy-status">{allowed ? c.privacyAllowed : c.privacyBlocked}</p><Button className="primary-action" onClick={toggleConsent}>{allowed ? c.socialRevoke : c.socialConsent}</Button></DialogContent></Dialog></div>;
 }

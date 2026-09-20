@@ -502,3 +502,17 @@ a.footer-social-chip:hover{border-color:#fff;background:#fff;color:var(--ink);tr
   .footer-social-chip{height:39px;padding-right:11px}
   .footer-social-chip>span{width:29px;height:29px}
 }
+
+/* Branded page transition */
+.page-transition{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:var(--paper);opacity:1;visibility:visible;pointer-events:auto;transition:opacity .32s ease,visibility 0s linear;isolation:isolate}
+.page-transition:before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.025' filter='url(%23paper)'/%3E%3C/svg%3E");pointer-events:none}
+.page-transition-hidden{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .32s ease,visibility 0s linear .32s}
+.page-transition-inner{position:relative;width:min(420px,72vw);display:flex;flex-direction:column;align-items:center;gap:19px;transform:translateY(0) scale(1);transition:transform .42s cubic-bezier(.2,.75,.2,1),opacity .28s ease}
+.page-transition-hidden .page-transition-inner{opacity:0;transform:translateY(8px) scale(.97)}
+.page-transition .brand-logo-image{width:100%;height:auto}
+.page-transition-line{display:block;width:min(250px,60vw);height:2px;overflow:hidden;background:#dddeda}
+.page-transition-line i{display:block;width:100%;height:100%;background:var(--orange);transform:scaleX(1);transform-origin:left;transition:transform .55s cubic-bezier(.2,.75,.2,1)}
+.page-transition-hidden .page-transition-line i{transform:scaleX(0)}
+.page-transition-inner>span{color:var(--muted-ink);font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+@media(max-width:620px){.page-transition-inner{width:min(330px,72vw);gap:16px}}
+@media(prefers-reduced-motion:reduce){.page-transition,.page-transition-inner,.page-transition-line i{transition-duration:.01ms}}
