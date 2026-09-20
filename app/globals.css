@@ -653,3 +653,14 @@ a.footer-social-chip:hover{border-color:#fff;background:#fff;color:var(--ink);tr
 .page-transition-inner>span{color:var(--muted-ink);font-size:10px;letter-spacing:.2em;text-transform:uppercase}
 @media(max-width:620px){.page-transition-inner{width:min(330px,72vw);gap:16px}}
 @media(prefers-reduced-motion:reduce){.page-transition,.page-transition-inner,.page-transition-line i{transition-duration:.01ms}}
+
+/* Cross-device mobile safeguards */
+@media(max-width:1000px){
+  .contact-layout{grid-template-columns:minmax(0,1fr);gap:55px}
+  .contact-form,.form-row,.contact-form label{min-width:0}
+}
+@media(max-width:340px){
+  .management-roster>header>div{min-width:0;gap:8px}
+  .management-roster>header h2{min-width:0;font-size:30px}
+  .management-roster>header p{flex:none;font-size:26px}
+}
