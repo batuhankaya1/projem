@@ -471,3 +471,34 @@
   .route-menu-brand .brand-logo-image{height:46px}
   .footer-brand .brand-logo-image{height:58px}
 }
+
+/* Compact footer connection line */
+.footer-vision{min-height:152px}
+.footer-brand{padding-left:0}.footer-brand .brand-logo-image{height:60px}
+.footer-connect{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:clamp(45px,8vw,130px);padding:clamp(38px,5vw,66px) 0;border-bottom:1px solid #646a6c}
+.footer-contact-link{display:block;max-width:850px}
+.footer-contact-link small{display:block;margin-bottom:19px;color:var(--orange);font-size:11px;letter-spacing:.17em}
+.footer-contact-link strong{display:block;font-family:Georgia,'Times New Roman',serif;font-size:clamp(32px,4.5vw,72px);font-style:italic;font-weight:400;letter-spacing:-.05em;line-height:1.02}
+.footer-contact-link>span{display:flex;align-items:center;gap:15px;margin-top:28px}
+.footer-contact-link>span i{width:min(340px,70%);height:1px;background:#777d7f;transform-origin:left;transition:transform .35s,background .35s}
+.footer-contact-link>span svg{width:23px;height:23px;color:var(--orange);stroke-width:1.4;transition:transform .3s}
+.footer-contact-link:hover>span i{background:var(--orange);transform:scaleX(.88)}
+.footer-contact-link:hover>span svg{transform:translate(6px,-6px)}
+.footer-social-compact{min-width:315px}
+.footer-social-compact>p{margin:0 0 14px;color:#aeb2b3;font-size:11px;letter-spacing:.13em;text-transform:uppercase}
+.footer-social-compact>div{display:flex;flex-wrap:wrap;gap:8px}
+.footer-social-chip{height:42px;display:inline-flex;align-items:center;gap:9px;padding:4px 13px 4px 4px;border:1px solid #686e70;border-radius:999px;color:var(--paper);font-size:12px;transition:border-color .2s,color .2s,transform .2s}
+.footer-social-chip>span{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:#434a4c}
+.footer-social-chip svg{width:15px;height:15px;stroke:currentColor;stroke-width:1.7}
+.footer-social-chip b{font-weight:400}
+a.footer-social-chip:hover{border-color:var(--orange);color:var(--orange);transform:translateY(-2px)}
+.footer-social-chip.is-disabled{color:#8e9394;opacity:.7}
+@media(max-width:760px){
+  .footer-vision{min-height:130px}
+  .footer-brand .brand-logo-image{height:50px}
+  .footer-connect{grid-template-columns:1fr;align-items:start;gap:45px;padding:45px 0}
+  .footer-social-compact{min-width:0}
+  .footer-social-compact>div{gap:7px}
+  .footer-social-chip{height:39px;padding-right:11px}
+  .footer-social-chip>span{width:29px;height:29px}
+}
