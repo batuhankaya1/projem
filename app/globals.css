@@ -376,6 +376,37 @@
 .org-position-4{left:11%;bottom:8%}
 .org-position-5{left:0;top:18%}
 
+.management-edition{min-height:170px;display:flex;align-items:center;justify-content:space-between;gap:40px;margin-top:clamp(65px,8vw,120px);padding:30px clamp(28px,4vw,64px);background:var(--ink);color:var(--paper)}
+.management-edition>div>span{display:block;margin-bottom:13px;color:var(--orange);font-size:11px;letter-spacing:.18em}
+.management-edition>div>p{margin:0;color:#c4c7c6;font-size:14px}
+.management-edition>strong{display:flex;align-items:center;gap:18px;color:var(--orange);font-size:clamp(58px,7vw,104px);font-weight:400;letter-spacing:-.075em;line-height:.8}
+.management-edition>strong small{max-width:120px;color:var(--paper);font-size:11px;font-weight:400;letter-spacing:.09em;line-height:1.35;text-transform:uppercase}
+.management-leadership,.management-roster{padding-top:clamp(80px,9vw,140px)}
+.management-leadership>header,.management-roster>header{display:grid;grid-template-columns:72px 1fr;align-items:end;padding-bottom:25px;border-bottom:1px solid #c7c8c5}
+.management-leadership>header>span,.management-roster>header>span{color:var(--orange);font-size:11px;letter-spacing:.18em}
+.management-leadership>header h2,.management-roster>header h2{margin:0;font-size:clamp(38px,5vw,74px);font-weight:400;letter-spacing:-.06em;line-height:.92}
+.management-leadership-map{position:relative;max-width:1120px;height:650px;margin:70px auto 0}
+.management-leadership-map>svg{position:absolute;inset:45px 0 0;width:100%;height:520px;stroke:#b2b4b1;stroke-width:1;stroke-dasharray:4 7}
+.management-lead{position:absolute;width:280px}
+.management-lead-0{left:50%;top:0;transform:translateX(-50%)}
+.management-lead-1{left:11%;bottom:0}
+.management-lead-2{right:11%;bottom:0}
+.management-person{text-align:center}
+.management-portrait{width:clamp(135px,12vw,180px);aspect-ratio:1;margin:0 auto 23px;border:3px solid var(--orange);border-radius:50%;overflow:hidden;background:#e2e2df;box-shadow:0 18px 42px #343b3d1a}
+.management-portrait img{display:block;width:116%;height:116%;margin:-8%;object-fit:cover;object-position:center 42%;filter:grayscale(1) contrast(1.08)}
+.management-person>span{display:block;color:var(--orange);font-size:10px;letter-spacing:.17em}
+.management-person h3{margin:12px 0 8px;font-size:clamp(19px,1.7vw,27px);font-weight:400;letter-spacing:-.035em;line-height:1.08}
+.management-person p{max-width:240px;margin:0 auto;color:var(--muted-ink);font-size:12px;line-height:1.45}
+.management-lead-0 .management-portrait{width:clamp(180px,16vw,235px);border-color:var(--ink)}
+.management-lead-0 .management-person h3{font-size:clamp(25px,2.2vw,34px)}
+.management-roster>header>div{display:flex;align-items:end;justify-content:space-between;gap:30px}
+.management-roster>header p{margin:0;color:#a2a5a4;font-size:clamp(32px,4vw,60px);font-weight:300;letter-spacing:-.06em;line-height:.8}
+.management-person-grid{display:grid;gap:55px 24px;padding-top:55px}
+.coordinators-grid{grid-template-columns:repeat(4,1fr)}
+.leaders-grid{grid-template-columns:repeat(5,1fr)}
+.management-person-grid .management-portrait{width:clamp(120px,11vw,165px)}
+.management-person-grid .management-person{min-width:0}
+
 .contact-layout{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(540px,1.2fr);gap:clamp(60px,9vw,150px);padding-top:clamp(70px,9vw,135px)}
 .contact-layout aside{position:relative;min-height:530px;padding:35px;border-top:1px solid #aeb8ae;border-bottom:1px solid #aeb8ae}
 .contact-layout aside>span{color:var(--orange);font-size:11px;letter-spacing:.17em}
@@ -450,6 +481,18 @@
   .org-circle,.org-center,.org-position-0,.org-position-1,.org-position-2,.org-position-3,.org-position-4,.org-position-5{position:relative;inset:auto;width:100%;transform:none}
   .org-center{grid-column:1/-1;width:min(260px,72vw);margin:0 auto 18px}
   .org-circle>p{font-size:12px}.org-circle>strong{font-size:15px}
+  .management-edition{min-height:150px;margin-top:65px;padding:25px 22px}
+  .management-edition>strong{font-size:62px}.management-edition>strong small{font-size:9px}
+  .management-leadership,.management-roster{padding-top:80px}
+  .management-leadership>header,.management-roster>header{grid-template-columns:42px 1fr}
+  .management-leadership>header h2,.management-roster>header h2{font-size:42px}
+  .management-leadership-map{height:auto;display:grid;grid-template-columns:1fr;gap:58px;margin-top:55px}
+  .management-leadership-map>svg{display:none}
+  .management-lead,.management-lead-0,.management-lead-1,.management-lead-2{position:relative;inset:auto;width:100%;transform:none}
+  .management-person-grid{grid-template-columns:repeat(2,1fr);gap:45px 18px;padding-top:42px}
+  .management-person-grid .management-portrait{width:min(135px,36vw)}
+  .management-person h3{font-size:19px}
+  .management-person p{font-size:11px}
   .contact-layout{grid-template-columns:1fr;gap:55px;padding-top:70px}
   .contact-layout aside{min-height:390px;padding:25px}
   .contact-layout aside h2{margin-top:48px}

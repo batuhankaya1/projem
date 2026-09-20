@@ -328,8 +328,30 @@ function AboutPage({ c, lang }: { c: Copy; lang: Language }) {
 }
 
 function ManagementPage({ c, lang }: { c: Copy; lang: Language }) {
-  const orbitItems = lang === 'tr' ? ['Genel Koordinasyon', 'Akademi Koordinasyonu', 'Program ve Eğitim', 'Organizasyon ve Kamplar', 'Tanıtım ve Medya', 'Mezun İlişkileri'] : ['General Coordination', 'Academy Coordination', 'Programme and Education', 'Organisation and Camps', 'Communications and Media', 'Alumni Relations'];
-  return <section className="institutional-page management-page"><InstitutionalIntro index="02" title={c.nav[2]} lead={lang === 'tr' ? 'Sorumluluğu paylaşan, programları birlikte yürüten bir yönetim yapısı.' : 'A management structure that shares responsibility and runs programmes together.'}/><div className="org-orbit" aria-label={lang === 'tr' ? 'Dairesel yönetim organizasyon şeması' : 'Circular management organisation chart'}><svg viewBox="0 0 1000 760" fill="none" aria-hidden="true"><ellipse cx="500" cy="380" rx="335" ry="305"/><path d="M500 380V75M500 380 830 225M500 380 800 610M500 380V690M500 380 200 610M500 380 170 225"/></svg><article className="org-circle org-center"><span>01</span><p>{lang === 'tr' ? 'Proje Başkanı' : 'Project Chair'}</p><strong>[{lang === 'tr' ? 'Ad Soyad' : 'Full Name'}]</strong><Mark/></article>{orbitItems.map((item, i) => <article className={`org-circle org-satellite org-position-${i}`} key={item}><span>{String(i + 2).padStart(2, '0')}</span><p>{item}</p><strong>[{lang === 'tr' ? 'Ad Soyad' : 'Full Name'}]</strong></article>)}</div></section>;
+  const leadership = [
+    { name: 'Abdulkadir Taşkın', role: lang === 'tr' ? 'Genel Koordinatör / Kurucu' : 'General Coordinator / Founder', image: 'abdulkadir-taskin.jpg' },
+    { name: 'Yusuf Ekrem Çakıroğlu', role: lang === 'tr' ? 'Projem Akademi Koordinatörü' : 'Projem Academy Coordinator', image: 'yusuf-ekrem-cakiroglu.jpg' },
+    { name: 'Muhammed Furkan Çoban', role: lang === 'tr' ? 'X10 Gençlik Koordinatörü' : 'X10 Youth Coordinator', image: 'muhammed-furkan-coban.jpg' },
+  ];
+  const coordinators = [
+    { name: 'Mustafa Tayyip Erdem', role: lang === 'tr' ? 'Projem Genel Sekreteri' : 'Projem General Secretary', image: 'mustafa-tayyip-erdem.jpg' },
+    { name: 'Şehmus Saygın', role: lang === 'tr' ? 'Eğitim Koordinatörü' : 'Education Coordinator', image: 'sehmus-saygin.jpg' },
+    { name: 'Cemil Sefa Kaplan', role: lang === 'tr' ? 'EKOP Koordinatörü' : 'EKOP Coordinator', image: 'cemil-sefa-kaplan.jpg' },
+    { name: 'Enes Bushi', role: lang === 'tr' ? 'SSKF Koordinatörü' : 'SSKF Coordinator', image: 'enes-bushi.jpg' },
+    { name: 'Enes Faruk Türköz', role: lang === 'tr' ? 'Tanıtım ve Medya Koordinatörü' : 'Communications and Media Coordinator', image: 'enes-faruk-turkoz.jpg' },
+    { name: 'Abdullah Kömürcü', role: lang === 'tr' ? 'İdari ve Mali İşler Koordinatörü' : 'Administrative and Financial Affairs Coordinator', image: 'abdullah-komurcu.jpg' },
+    { name: 'Ahmet Taha Elmas', role: lang === 'tr' ? 'Sınavlara Hazırlık Koordinatörü' : 'Exam Preparation Coordinator', image: 'ahmet-taha-elmas.jpg' },
+    { name: 'Akif Akkaya', role: lang === 'tr' ? 'Mezun Çalışmaları Koordinatörü' : 'Alumni Programme Coordinator', image: 'akif-akkaya.jpg' },
+  ];
+  const groupLeaders = [
+    { name: 'Muhammed Furkan Çoban', role: lang === 'tr' ? '12. Sınıflar Grup Lideri' : 'Grade 12 Group Leader', image: 'muhammed-furkan-coban.jpg' },
+    { name: 'Necmettin Bora Çalık', role: lang === 'tr' ? '11. Sınıflar Grup Lideri' : 'Grade 11 Group Leader', image: 'necmettin-bora-calik.jpg' },
+    { name: 'Muhammed Denli', role: lang === 'tr' ? '10. Sınıflar Grup Lideri' : 'Grade 10 Group Leader', image: 'muhammed-denli.jpg' },
+    { name: 'Muhammed Mansur Kurt', role: lang === 'tr' ? '9. Sınıflar Grup Lideri' : 'Grade 9 Group Leader', image: 'muhammed-mansur-kurt.jpg' },
+    { name: 'Osman Efe Kaleli', role: lang === 'tr' ? 'Hazırlık Sınıfları Grup Lideri' : 'Preparatory Class Group Leader', image: 'osman-efe-kaleli.jpg' },
+  ];
+  const person = (item: typeof leadership[number], index: number) => <article className="management-person" key={`${item.name}-${item.role}`}><div className="management-portrait"><img src={`/images/team/${item.image}`} alt="" width="512" height="512"/></div><span>{String(index + 1).padStart(2, '0')}</span><h3>{item.name}</h3><p>{item.role}</p></article>;
+  return <section className="institutional-page management-page"><InstitutionalIntro index="02" title={c.nav[2]} lead={lang === 'tr' ? 'Programı yürüten koordinatörler ve öğrencilerle birlikte büyüyen bir sorumluluk ağı.' : 'A network of responsibility that grows through coordinators and student leaders running the programme together.'}/><div className="management-edition"><div><span>{lang === 'tr' ? '20. YIL SUNUMU' : '20TH-YEAR PRESENTATION'}</span><p>{lang === 'tr' ? 'Broşürde yer alan yönetim kadrosu' : 'Management team listed in the institutional booklet'}</p></div><strong>75<small>{lang === 'tr' ? 'kişilik yönetim ekibi' : 'people in the management team'}</small></strong></div><section className="management-leadership" aria-labelledby="leadership-title"><header><span>01</span><h2 id="leadership-title">{lang === 'tr' ? 'Genel koordinasyon' : 'General coordination'}</h2></header><div className="management-leadership-map"><svg viewBox="0 0 1000 500" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d="M500 185V250M500 250H245V310M500 250H755V310"/></svg>{leadership.map((item, index) => <div className={`management-lead management-lead-${index}`} key={item.name}>{person(item, index)}</div>)}</div></section><section className="management-roster" aria-labelledby="coordinators-title"><header><span>02</span><div><h2 id="coordinators-title">{lang === 'tr' ? 'Koordinatörler' : 'Coordinators'}</h2><p>{String(coordinators.length).padStart(2, '0')}</p></div></header><div className="management-person-grid coordinators-grid">{coordinators.map(person)}</div></section><section className="management-roster" aria-labelledby="leaders-title"><header><span>03</span><div><h2 id="leaders-title">{lang === 'tr' ? 'Grup liderleri' : 'Group leaders'}</h2><p>{String(groupLeaders.length).padStart(2, '0')}</p></div></header><div className="management-person-grid leaders-grid">{groupLeaders.map(person)}</div></section></section>;
 }
 
 function ContactPage({ c, lang }: { c: Copy; lang: Language }) {
