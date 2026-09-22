@@ -268,8 +268,11 @@
 .home-about-copy{max-width:710px;padding-top:3px}
 .home-about-copy>p{max-width:680px;margin:0;color:var(--ink);font-size:clamp(18px,1.65vw,25px);letter-spacing:-.025em;line-height:1.48}
 .home-about-copy>p+p{margin-top:24px;color:var(--muted-ink);font-size:clamp(15px,1.25vw,19px);line-height:1.62}
-.home-about-principles{display:flex;flex-wrap:wrap;gap:8px;margin-top:38px}
-.home-about-principles span{min-height:39px;display:inline-flex;align-items:center;padding:7px 15px;border:1px solid #bfc1bd;border-radius:999px;background:rgba(255,255,255,.34);color:#5e6262;font-size:10px;letter-spacing:.09em;text-transform:uppercase}
+.home-about-principles{display:grid;grid-template-columns:minmax(92px,.34fr) 1fr;gap:24px;margin-top:40px;padding:20px 0;border-top:1px solid #bfc1bd;border-bottom:1px solid #bfc1bd}
+.home-about-principles>strong{color:var(--orange);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.home-about-principles ul{display:flex;flex-wrap:wrap;gap:10px 24px;margin:0;padding:0;list-style:none}
+.home-about-principles li{position:relative;padding-left:14px;color:#515656;font-size:12px;letter-spacing:.055em;line-height:1.4;text-transform:uppercase}
+.home-about-principles li:before{content:'';position:absolute;left:0;top:.48em;width:5px;height:5px;border-radius:50%;background:var(--orange)}
 .home-about-link{width:min(100%,520px);display:flex;align-items:center;gap:14px;margin-top:48px;padding-bottom:14px;border-bottom:1px solid #aeb1ae;color:var(--ink);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
 .home-about-link i{height:1px;flex:1;background:#bfc1bd;transform-origin:left;transition:transform .3s,background .3s}
 .home-about-link svg{width:20px;height:20px;color:var(--orange);stroke-width:1.5;transition:transform .3s}
@@ -451,8 +454,9 @@
   .home-about-title-wrap h2{font-size:clamp(65px,22vw,96px)}
   .home-about-copy>p{font-size:19px}
   .home-about-copy>p+p{font-size:15px}
-  .home-about-principles{gap:6px;margin-top:30px}
-  .home-about-principles span{min-height:36px;padding:6px 12px;font-size:9px}
+  .home-about-principles{grid-template-columns:1fr;gap:15px;margin-top:32px;padding:18px 0}
+  .home-about-principles ul{display:grid;gap:11px}
+  .home-about-principles li{font-size:11px}
   .home-about-link{margin-top:39px}
   .stats-bar{padding:0 22px}
   .stats-heading{min-height:180px;grid-template-columns:42px 1fr}
