@@ -131,17 +131,27 @@
 }
 
 /* Route navigation */
-.route-header{position:fixed;top:0;left:50%;transform:translateX(-50%);width:min(100%,2000px);height:88px;padding:14px 4.2%;border:0;background:transparent;pointer-events:none;z-index:40}
-.route-header>*{pointer-events:auto}
-.route-brand{padding:7px 16px 7px 9px;border:1px solid #d4d9ce;background:#f7f6f0db;border-radius:999px;box-shadow:0 10px 35px #31413518;backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px)}
+.route-header{position:fixed;top:16px;left:50%;transform:translateX(-50%);width:min(calc(100% - 5.2vw),1840px);height:86px;padding:10px 10px 10px 22px;border:1px solid rgba(207,210,205,.82);border-radius:999px;background:rgba(239,239,236,.84);box-shadow:0 14px 42px rgba(31,48,42,.1);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:40;transition:top .28s ease,height .28s ease,padding .28s ease,background .28s ease,border-color .28s ease,box-shadow .28s ease}
+.route-header-scrolled{top:8px;height:74px;padding:7px 8px 7px 18px;background:rgba(255,255,255,.96);border-color:rgba(207,209,206,.96);box-shadow:0 16px 46px rgba(36,45,42,.17)}
+.route-header-actions{display:flex;align-items:center;gap:10px}
+.route-language-quick{height:64px;display:flex;align-items:center;gap:11px;padding:6px 19px 6px 6px;border:1px solid rgba(211,213,210,.85);border-radius:999px;background:rgba(222,224,221,.72);color:var(--ink);transition:height .28s ease,background .2s ease,transform .2s ease}
+.route-language-quick>span{width:50px;height:50px;display:grid;place-items:center;border-radius:50%;background:#f8f8f5;color:var(--orange);font-size:11px;font-weight:700;letter-spacing:.08em;box-shadow:0 3px 12px rgba(41,48,45,.08)}
+.route-language-quick>strong{font-size:14px;font-weight:500;letter-spacing:.01em}
+.route-language-quick:hover{background:#f8f8f5;transform:translateY(-1px)}
+.route-header-scrolled .route-language-quick{height:58px}
+.route-header-scrolled .route-language-quick>span{width:44px;height:44px}
+.route-brand{padding:0;border:0;background:transparent;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 .route-brand .mark{width:38px;height:38px}
 .route-brand>span{font-size:16px}
 .route-brand small{margin-top:3px;font-size:8px}
-.route-menu-trigger{display:flex;align-items:center;gap:16px;padding:7px 8px 7px 18px;border:1px solid #d4d9ce;border-radius:999px;background:#f7f6f0db;color:var(--ink);box-shadow:0 10px 35px #31413518;backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);font-size:11px;letter-spacing:.13em;text-transform:uppercase}
-.route-menu-icon{width:38px;height:38px;border-radius:50%;display:grid;place-content:center;gap:5px;background:var(--ink)}
-.route-menu-icon i{display:block;width:14px;height:1px;background:var(--paper);transition:transform .25s}
+.route-menu-trigger{width:64px;height:64px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:transparent;color:var(--paper);transition:width .28s ease,height .28s ease,transform .2s ease}
+.route-menu-icon{width:64px;height:64px;border-radius:50%;display:grid;place-content:center;gap:6px;background:var(--ink);transition:width .28s ease,height .28s ease,background .2s ease}
+.route-menu-icon i{display:block;width:22px;height:2px;border-radius:2px;background:var(--paper);transition:transform .25s,width .25s}
+.route-menu-trigger:hover{transform:rotate(3deg)}
+.route-menu-trigger:hover .route-menu-icon{background:var(--orange)}
 .route-menu-trigger:hover .route-menu-icon i:first-child{transform:translateX(3px)}
 .route-menu-trigger:hover .route-menu-icon i:last-child{transform:translateX(-3px)}
+.route-header-scrolled .route-menu-trigger,.route-header-scrolled .route-menu-icon{width:58px;height:58px}
 .route-menu-sheet{inset:0!important;width:100vw!important;height:100svh!important;max-width:none!important;padding:0!important;border:0!important;gap:0!important;overflow:hidden;background:#203c32!important;color:#f5f3e9!important;box-shadow:none!important}
 .route-menu-head{position:absolute;top:0;left:0;right:0;height:92px;display:flex;align-items:center;justify-content:space-between;padding:15px 4.2%;z-index:5}
 .route-menu-brand{color:#f5f3e9}
@@ -174,7 +184,14 @@
 @keyframes route-draw{from{stroke-dashoffset:1}}
 
 @media(max-width:850px){
-  .route-header{height:78px;padding:11px 22px}
+  .route-header{top:10px;width:calc(100% - 24px);height:70px;padding:6px 7px 6px 14px}
+  .route-header-scrolled{top:6px;height:66px;padding-left:12px}
+  .route-language-quick{height:56px;padding-right:15px}
+  .route-language-quick>span{width:44px;height:44px}
+  .route-header-scrolled .route-language-quick{height:52px}
+  .route-header-scrolled .route-language-quick>span{width:40px;height:40px}
+  .route-menu-trigger,.route-menu-icon{width:56px;height:56px}
+  .route-header-scrolled .route-menu-trigger,.route-header-scrolled .route-menu-icon{width:52px;height:52px}
   .route-menu-head{height:80px;padding:11px 22px}
   .route-menu-title{left:23px;top:13%;font-size:clamp(34px,8vw,58px)!important}
   .route-menu-description{left:25px;top:22%}
@@ -184,11 +201,19 @@
   .detail-page{padding-top:78px}
 }
 @media(max-width:620px){
-  .route-brand{padding-right:11px}
+  .route-header{top:8px;width:calc(100% - 20px);height:64px;padding:5px 6px 5px 11px}
+  .route-header-scrolled{top:5px;height:60px;padding-left:10px}
+  .route-header-actions{gap:6px}
+  .route-language-quick{height:50px;padding:4px}
+  .route-language-quick>span{width:40px;height:40px}
+  .route-language-quick>strong{display:none}
+  .route-header-scrolled .route-language-quick{height:46px}
+  .route-header-scrolled .route-language-quick>span{width:36px;height:36px}
+  .route-menu-trigger,.route-menu-icon{width:50px;height:50px}
+  .route-header-scrolled .route-menu-trigger,.route-header-scrolled .route-menu-icon{width:46px;height:46px}
+  .route-menu-icon i{width:18px}
   .route-brand small{display:none}
   .route-brand>span{font-size:15px}
-  .route-menu-trigger{padding-left:14px;gap:10px}
-  .route-menu-trigger>span:first-child{font-size:9px}
   .route-menu-title{top:12%;font-size:39px!important}
   .route-menu-description{top:19%;font-size:9px!important}
   .route-menu-map{inset:16% 0 5%}
@@ -606,13 +631,12 @@
 
 /* Primary Projem logo */
 .brand-logo-image{display:block;width:auto;height:56px;object-fit:contain}
-.route-brand{padding:5px 13px;background:transparent;border-color:transparent;border-radius:999px;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
-.route-brand .brand-logo-image{height:52px}
-.route-header .route-brand{transition:transform .34s cubic-bezier(.2,.75,.2,1),opacity .24s ease,background .28s ease,border-color .28s ease,box-shadow .28s ease,padding .28s ease}
+.route-brand{padding:0;background:transparent;border-color:transparent;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.route-brand .brand-logo-image{height:56px}
+.route-header .route-brand{transition:padding .28s ease}
 .route-header .route-brand .brand-logo-image{transition:height .28s ease}
-.route-header-scrolled .route-brand{padding:6px 14px;background:rgba(247,246,242,.94);border-color:rgba(212,213,210,.95);box-shadow:0 12px 34px rgba(52,59,61,.14);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
-.route-header-scrolled .route-brand .brand-logo-image{height:44px}
-.route-header-brand-hidden .route-brand{opacity:0;transform:translateY(calc(-100% - 24px));pointer-events:none}
+.route-header-scrolled .route-brand{padding:0;background:transparent;border-color:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.route-header-scrolled .route-brand .brand-logo-image{height:48px}
 .route-menu-brand{padding:7px 13px;background:transparent;border-radius:3px}
 .route-menu-brand .brand-logo-image{height:60px}
 .route-menu-brand .brand-logo-image,.footer-brand .brand-logo-image{filter:brightness(0) invert(1)}
@@ -620,12 +644,22 @@
 .footer-brand .brand-logo-image{height:76px}
 .language-entry-logo{display:block;width:min(430px,80vw);height:auto}
 @media(max-width:620px){
-  .route-brand{padding:5px 10px}
-  .route-brand .brand-logo-image{height:39px}
-  .route-header-scrolled .route-brand{padding:5px 10px}
-  .route-header-scrolled .route-brand .brand-logo-image{height:36px}
+  .route-brand{padding:0}
+  .route-brand .brand-logo-image{height:38px}
+  .route-header-scrolled .route-brand{padding:0}
+  .route-header-scrolled .route-brand .brand-logo-image{height:35px}
+  .route-menu-brand{padding:5px 8px}
   .route-menu-brand .brand-logo-image{height:46px}
   .footer-brand .brand-logo-image{height:58px}
+}
+@media(max-width:360px){
+  .route-header{padding-left:9px}
+  .route-brand .brand-logo-image{height:32px}
+  .route-header-scrolled .route-brand .brand-logo-image{height:30px}
+  .route-language-quick,.route-menu-trigger,.route-menu-icon{width:44px;height:44px}
+  .route-language-quick>span{width:36px;height:36px}
+  .route-header-scrolled .route-language-quick,.route-header-scrolled .route-menu-trigger,.route-header-scrolled .route-menu-icon{width:42px;height:42px}
+  .route-header-scrolled .route-language-quick>span{width:34px;height:34px}
 }
 
 /* Compact footer connection line */
