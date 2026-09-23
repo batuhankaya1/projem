@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
 import { ArrowUpRight, ArrowUp, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetDescription, SheetClose } from '@/components/ui/sheet';
@@ -111,6 +111,71 @@ function Header({ lang, page, c }: { lang: Language; page?: PageKey; c: Copy }) 
       </div>
     </header>
   </>;
+}
+
+function LivingContinuum({ children }: { children: ReactNode }) {
+  const container = useRef<HTMLDivElement>(null);
+  const path = useRef<SVGPathElement>(null);
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      if (!container.current || !path.current) return;
+      const bounds = container.current.getBoundingClientRect();
+      const progress = Math.max(0, Math.min(1, (window.innerHeight * .82 - bounds.top) / (bounds.height * .9)));
+      path.current.style.strokeDashoffset = String(1 - progress);
+    };
+    const schedule = () => { if (!raf) raf = window.requestAnimationFrame(update); };
+    update();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    return () => {
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      if (raf) window.cancelAnimationFrame(raf);
+    };
+  }, []);
+  return <div className="home-continuum" ref={container}>
+    <svg className="home-continuum-line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <path className="continuum-ghost" d="M3 -3 C3 13 96 10 96 28 S4 42 4 55 S96 66 96 78 S72 96 93 103"/>
+      <path ref={path} className="continuum-live" pathLength="1" d="M3 -3 C3 13 96 10 96 28 S4 42 4 55 S96 66 96 78 S72 96 93 103"/>
+      <circle cx="96" cy="28" r=".7"/><circle cx="4" cy="55" r=".7"/><circle cx="96" cy="78" r=".7"/>
+    </svg>
+    {children}
+  </div>;
+}
+
+function AnimatedMetric({ value, suffix = '' }: { value: number; suffix?: string }) {
+  const [display, setDisplay] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    let frame = 0;
+    let played = false;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || played) return;
+      played = true;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setDisplay(value);
+        observer.disconnect();
+        return;
+      }
+      const started = performance.now();
+      const duration = 1200;
+      const tick = (now: number) => {
+        const progress = Math.min(1, (now - started) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setDisplay(Math.round(value * eased));
+        if (progress < 1) frame = requestAnimationFrame(tick);
+      };
+      frame = requestAnimationFrame(tick);
+      observer.disconnect();
+    }, { threshold: .45 });
+    observer.observe(node);
+    return () => { observer.disconnect(); if (frame) cancelAnimationFrame(frame); };
+  }, [value]);
+  return <span ref={ref}>{display}{suffix}</span>;
 }
 
 const journeyPath = 'M -90 760 C 165 760 130 470 355 470 C 585 470 430 830 720 760 C 965 700 770 255 1010 215 C 1205 182 1215 540 1375 380 C 1510 245 1400 72 1690 58';
@@ -274,39 +339,30 @@ function WhoWeAre({ lang }: { lang: Language }) {
 }
 
 function StatsBar({ lang }: { lang: Language }) {
+  const stats = [
+    { value: 75, suffix: '', label: lang === 'tr' ? 'Projem lise öğrencisi' : 'Projem high-school students', note: '' },
+    { value: 108, suffix: '', label: lang === 'tr' ? 'Projem mezunu' : 'Projem alumni', note: lang === 'tr' ? 'Mühendislik %69 · Sağlık %12 · Sosyal Bilimler %8 · Diğer %11' : 'Engineering 69% · Health 12% · Social Sciences 8% · Other 11%' },
+    { value: 12, suffix: '', label: lang === 'tr' ? 'Her yıl ortalama mezun' : 'Average graduates each year', note: lang === 'tr' ? 'Programı tamamlayarak üniversite ve yönetim ekibine dâhil olan mezunlar' : 'Graduates completing the programme and joining university and the management team' },
+    { value: 200, suffix: '+', label: lang === 'tr' ? 'X10 ile her yıl ulaşılan genç' : 'Young people reached by X10 each year', note: lang === 'tr' ? 'Projem öğrencilerinin dışında ulaşılan gençler' : 'Young people reached beyond Projem’s own students' },
+  ];
   return <section className="stats-bar" aria-labelledby="stats-title">
     <header className="stats-heading">
       <span>02</span>
       <h2 id="stats-title">{lang === 'tr' ? 'Sayılarla Projem' : 'Projem in numbers'}</h2>
     </header>
-    <dl className="stats-current">
-      <div>
-        <dd>75</dd>
-        <dt>{lang === 'tr' ? 'Projem lise öğrencisi' : 'Projem high-school students'}</dt>
-      </div>
-      <div>
-        <dd>108</dd>
-        <dt>{lang === 'tr' ? 'Projem mezunu' : 'Projem alumni'}</dt>
-        <p>{lang === 'tr' ? 'Mühendislik %69 · Sağlık %12 · Sosyal Bilimler %8 · Diğer %11' : 'Engineering 69% · Health 12% · Social Sciences 8% · Other 11%'}</p>
-      </div>
-      <div>
-        <dd>12</dd>
-        <dt>{lang === 'tr' ? 'Her yıl ortalama mezun' : 'Average graduates each year'}</dt>
-        <p>{lang === 'tr' ? 'Programı tamamlayarak üniversite ve yönetim ekibine dâhil olan mezunlar' : 'Graduates completing the programme and joining university and the management team'}</p>
-      </div>
-      <div>
-        <dd>200+</dd>
-        <dt>{lang === 'tr' ? 'X10 ile her yıl ulaşılan genç' : 'Young people reached by X10 each year'}</dt>
-        <p>{lang === 'tr' ? 'Projem öğrencilerinin dışında ulaşılan gençler' : 'Young people reached beyond Projem’s own students'}</p>
-      </div>
-    </dl>
+    <dl className="stats-current">{stats.map((stat, index) => <div key={stat.label} style={{ '--metric-progress': `${72 + index * 6}` } as CSSProperties}>
+      <dd><span className="metric-orbit" aria-hidden="true"><svg viewBox="0 0 120 120"><circle className="metric-track" cx="60" cy="60" r="54"/><circle className="metric-progress" pathLength="100" cx="60" cy="60" r="54"/></svg></span><AnimatedMetric value={stat.value} suffix={stat.suffix}/></dd>
+      <dt>{stat.label}</dt>
+      {stat.note && <p>{stat.note}</p>}
+    </div>)}</dl>
   </section>;
 }
 
 function ProgramsShowcase({ lang }: { lang: Language }) {
   const cards = programCards[lang];
-  const cardGroup = (hidden = false) => <div className="program-film-group" aria-hidden={hidden || undefined}>{cards.map((program, i) => <article className="program-card" key={`${hidden ? 'duplicate-' : ''}${program.title}`}><div className={`program-card-image program-image-${i}`} role="img" aria-label={program.title}/><div className="program-card-copy"><div className="program-card-meta"><span>{String(i + 1).padStart(2, '0')}</span><span>{program.meta}</span></div><h3>{program.title}</h3><p>{program.detail}</p></div></article>)}</div>;
-  return <section className="programs-showcase" aria-labelledby="programs-title"><header className="programs-heading"><div><span>03 / 05</span><h2 id="programs-title">{lang === 'tr' ? <>Programlarımız<br/><em>& etkinliklerimiz</em></> : <>Our programmes<br/><em>& events</em></>}</h2></div><p>{lang === 'tr' ? 'Yıl boyunca, birlikte.' : 'Together, throughout the year.'}</p></header><div className="program-film" aria-label={lang === 'tr' ? 'Programlar ve etkinlikler' : 'Programmes and events'}><div className="program-film-track">{cardGroup()}{cardGroup(true)}</div></div></section>;
+  const [active, setActive] = useState(0);
+  const cardGroup = (hidden = false) => <div className="program-film-group" aria-hidden={hidden || undefined}>{cards.map((program, i) => <article className={`program-card${active === i ? ' is-active' : ''}`} data-program={i} key={`${hidden ? 'duplicate-' : ''}${program.title}`} tabIndex={hidden ? -1 : 0} onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)} onClick={() => setActive(i)}><div className={`program-card-image program-image-${i}`} role="img" aria-label={program.title}><span className="program-frame-number">{String(i + 1).padStart(2, '0')}</span><span className="program-timecode">20:07:{String((i + 1) * 7).padStart(2, '0')}</span></div><div className="program-card-copy"><div className="program-card-meta"><span>{String(i + 1).padStart(2, '0')}</span><span>{program.meta}</span></div><h3>{program.title}</h3><p>{program.detail}</p></div></article>)}</div>;
+  return <section className="programs-showcase" aria-labelledby="programs-title"><header className="programs-heading"><div><span>03 / 05</span><h2 id="programs-title">{lang === 'tr' ? <>Programlarımız<br/><em>& etkinliklerimiz</em></> : <>Our programmes<br/><em>& events</em></>}</h2></div><p>{lang === 'tr' ? 'Yıl boyunca, birlikte.' : 'Together, throughout the year.'}</p></header><nav className="program-cinematic-index" aria-label={lang === 'tr' ? 'Program seçimi' : 'Programme selection'}>{cards.map((program, i) => <button type="button" className={active === i ? 'is-active' : ''} aria-pressed={active === i} onClick={() => setActive(i)} key={program.title}><span>{String(i + 1).padStart(2, '0')}</span><strong>{program.title}</strong><i/></button>)}</nav><div className="program-film" aria-label={lang === 'tr' ? 'Programlar ve etkinlikler' : 'Programmes and events'}><div className="program-film-status"><span>PROJEM / 2007—{new Date().getFullYear()}</span><span>{lang === 'tr' ? 'HAREKETLİ ARŞİV' : 'LIVING ARCHIVE'}</span></div><div className="program-film-track">{cardGroup()}{cardGroup(true)}</div></div></section>;
 }
 
 function Detail({ page, c, lang }: { page: PageKey; c: Copy; lang: Language }) {
@@ -381,8 +437,15 @@ function ManagementPage({ c, lang }: { c: Copy; lang: Language }) {
     { name: 'Muhammed Mansur Kurt', role: lang === 'tr' ? '9. Sınıflar Grup Lideri' : 'Grade 9 Group Leader', image: 'muhammed-mansur-kurt.jpg' },
     { name: 'Osman Efe Kaleli', role: lang === 'tr' ? 'Hazırlık Sınıfları Grup Lideri' : 'Preparatory Class Group Leader', image: 'osman-efe-kaleli.jpg' },
   ];
-  const person = (item: typeof leadership[number], index: number) => <article className="management-person" key={`${item.name}-${item.role}`}><div className="management-portrait"><img src={`/images/team/${item.image}`} alt="" width="512" height="512"/></div><span>{String(index + 1).padStart(2, '0')}</span><h3>{item.name}</h3><p>{item.role}</p></article>;
-  return <section className="institutional-page management-page"><InstitutionalIntro index="02" title={c.nav[2]} lead={lang === 'tr' ? 'Programı yürüten koordinatörler ve öğrencilerle birlikte büyüyen bir sorumluluk ağı.' : 'A network of responsibility that grows through coordinators and student leaders running the programme together.'}/><div className="management-edition"><div><span>{lang === 'tr' ? '20. YIL SUNUMU' : '20TH-YEAR PRESENTATION'}</span><p>{lang === 'tr' ? 'Broşürde yer alan yönetim kadrosu' : 'Management team listed in the institutional booklet'}</p></div><strong>75<small>{lang === 'tr' ? 'kişilik yönetim ekibi' : 'people in the management team'}</small></strong></div><section className="management-leadership" aria-labelledby="leadership-title"><header><span>01</span><h2 id="leadership-title">{lang === 'tr' ? 'Genel koordinasyon' : 'General coordination'}</h2></header><div className="management-leadership-map"><svg viewBox="0 0 1000 500" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d="M500 185V250M500 250H245V310M500 250H755V310"/></svg>{leadership.map((item, index) => <div className={`management-lead management-lead-${index}`} key={item.name}>{person(item, index)}</div>)}</div></section><section className="management-roster" aria-labelledby="coordinators-title"><header><span>02</span><div><h2 id="coordinators-title">{lang === 'tr' ? 'Koordinatörler' : 'Coordinators'}</h2><p>{String(coordinators.length).padStart(2, '0')}</p></div></header><div className="management-person-grid coordinators-grid">{coordinators.map(person)}</div></section><section className="management-roster" aria-labelledby="leaders-title"><header><span>03</span><div><h2 id="leaders-title">{lang === 'tr' ? 'Grup liderleri' : 'Group leaders'}</h2><p>{String(groupLeaders.length).padStart(2, '0')}</p></div></header><div className="management-person-grid leaders-grid">{groupLeaders.map(person)}</div></section></section>;
+  const directory = [
+    ...leadership.map((item, index) => ({ ...item, key: `leadership-${index}`, index, group: 'leadership', groupLabel: lang === 'tr' ? 'Genel koordinasyon' : 'General coordination' })),
+    ...coordinators.map((item, index) => ({ ...item, key: `coordinators-${index}`, index, group: 'coordinators', groupLabel: lang === 'tr' ? 'Koordinatörler' : 'Coordinators' })),
+    ...groupLeaders.map((item, index) => ({ ...item, key: `leaders-${index}`, index, group: 'leaders', groupLabel: lang === 'tr' ? 'Grup liderleri' : 'Group leaders' })),
+  ];
+  const [activeKey, setActiveKey] = useState('leadership-0');
+  const activePerson = directory.find(item => item.key === activeKey) ?? directory[0];
+  const person = (item: typeof directory[number]) => <article className={`management-person${activeKey === item.key ? ' is-active' : ''}`} key={item.key} tabIndex={0} onMouseEnter={() => setActiveKey(item.key)} onFocus={() => setActiveKey(item.key)} onClick={() => setActiveKey(item.key)} aria-label={`${item.name}, ${item.role}`}><div className="management-portrait"><img src={`/images/team/${item.image}`} alt="" width="512" height="512"/></div><span>{String(item.index + 1).padStart(2, '0')}</span><h3>{item.name}</h3><p>{item.role}</p></article>;
+  return <section className="institutional-page management-page"><InstitutionalIntro index="02" title={c.nav[2]} lead={lang === 'tr' ? 'Programı yürüten koordinatörler ve öğrencilerle birlikte büyüyen bir sorumluluk ağı.' : 'A network of responsibility that grows through coordinators and student leaders running the programme together.'}/><div className="management-edition"><div><span>{lang === 'tr' ? '20. YIL' : '20 YEARS'}</span><p>{lang === 'tr' ? 'Öğrenciler, mezunlar ve gönüllüler arasında yaşayan sorumluluk ağı' : 'A living network of responsibility across students, alumni and volunteers'}</p></div><strong>75<small>{lang === 'tr' ? 'kişilik yönetim ekibi' : 'people in the management team'}</small></strong></div><aside className="management-focus" aria-live="polite"><span>{activePerson.groupLabel} / {String(activePerson.index + 1).padStart(2, '0')}</span><div><strong>{activePerson.name}</strong><p>{activePerson.role}</p></div><i aria-hidden="true"/></aside><section className={`management-leadership${activePerson.group === 'leadership' ? ' management-section-active' : ''}`} aria-labelledby="leadership-title"><header><span>01</span><h2 id="leadership-title">{lang === 'tr' ? 'Genel koordinasyon' : 'General coordination'}</h2></header><div className="management-leadership-map"><svg viewBox="0 0 1000 500" preserveAspectRatio="none" fill="none" aria-hidden="true"><path className="management-trunk" d="M500 185V250"/><path className={activeKey === 'leadership-1' ? 'is-active' : ''} d="M500 250H245V310"/><path className={activeKey === 'leadership-2' ? 'is-active' : ''} d="M500 250H755V310"/></svg>{directory.filter(item => item.group === 'leadership').map(item => <div className={`management-lead management-lead-${item.index}`} key={item.key}>{person(item)}</div>)}</div></section><section className={`management-roster${activePerson.group === 'coordinators' ? ' management-section-active' : ''}`} aria-labelledby="coordinators-title"><header><span>02</span><div><h2 id="coordinators-title">{lang === 'tr' ? 'Koordinatörler' : 'Coordinators'}</h2><p>{String(coordinators.length).padStart(2, '0')}</p></div></header><div className="management-person-grid coordinators-grid">{directory.filter(item => item.group === 'coordinators').map(person)}</div></section><section className={`management-roster${activePerson.group === 'leaders' ? ' management-section-active' : ''}`} aria-labelledby="leaders-title"><header><span>03</span><div><h2 id="leaders-title">{lang === 'tr' ? 'Grup liderleri' : 'Group leaders'}</h2><p>{String(groupLeaders.length).padStart(2, '0')}</p></div></header><div className="management-person-grid leaders-grid">{directory.filter(item => item.group === 'leaders').map(person)}</div></section></section>;
 }
 
 function ContactPage({ c, lang }: { c: Copy; lang: Language }) {
@@ -393,12 +456,12 @@ function ContactPage({ c, lang }: { c: Copy; lang: Language }) {
 
 function Footer({ c, lang, openPrivacy }: { c: Copy; lang: Language; openPrivacy: ()=>void }) {
   const socials = [{ label: 'Instagram', url: organization.instagram, icon: <InstagramMark/> }, { label: 'X', url: organization.x, icon: <XMark/> }, { label: 'LinkedIn', url: organization.linkedin, icon: <LinkedInMark/> }];
-  return <footer className="site-footer"><div className="footer-vision"><a className="brand footer-brand" href={`/${lang}`} aria-label={`${c.name} — ${c.home}`}><BrandLogo/></a><p>2007 <i/> {lang === 'tr' ? '20. YIL' : '20 YEARS'}</p></div><div className="footer-connect"><a className="footer-contact-link" href={`/${lang}/contact`}><small>{lang === 'tr' ? '03 / İLETİŞİM' : '03 / CONTACT'}</small><strong>{lang === 'tr' ? 'Birlikte yeni bir çizgi açalım.' : 'Let’s begin a new line together.'}</strong><span aria-hidden="true"><i/><ArrowUpRight/></span></a><div className="footer-social-compact"><p>{lang === 'tr' ? 'Bizi takip edin' : 'Follow us'}</p><div aria-label={lang === 'tr' ? 'Sosyal medya' : 'Social media'}>{socials.map(item => item.url ? <a className="footer-social-chip" key={item.label} href={item.url} target="_blank" rel="noreferrer" aria-label={item.label}><span>{item.icon}</span><b>{item.label}</b></a> : <span className="footer-social-chip is-disabled" key={item.label} aria-disabled="true"><span>{item.icon}</span><b>{item.label}</b></span>)}</div></div></div><div className="footer-floor"><span>© {new Date().getFullYear()} {c.name}</span><button onClick={openPrivacy}>{c.privacy}</button><a href="#top">{c.backTop}<ArrowUp size={15}/></a></div></footer>;
+  return <footer className="site-footer"><div className="footer-arrival"><svg viewBox="0 0 1000 210" preserveAspectRatio="none" aria-hidden="true"><path d="M-40 52C210 52 130 166 390 166S610 48 820 90 900 162 968 115"/><circle cx="968" cy="115" r="19"/></svg><div className="footer-arrival-copy"><span>{lang === 'tr' ? 'ÇİZGİNİN VARDIĞI YER' : 'WHERE THE LINE ARRIVES'}</span><strong>{lang === 'tr' ? '2007’den beri devam eden bir gençlik hikâyesi.' : 'A youth story in motion since 2007.'}</strong></div><div className="footer-arrival-place"><i/><span>İstanbul · Türkiye</span></div></div><div className="footer-vision"><a className="brand footer-brand" href={`/${lang}`} aria-label={`${c.name} — ${c.home}`}><BrandLogo/></a><p>2007 <i/> {lang === 'tr' ? '20. YIL' : '20 YEARS'}</p></div><div className="footer-connect"><a className="footer-contact-link" href={`/${lang}/contact`}><small>{lang === 'tr' ? '03 / İLETİŞİM' : '03 / CONTACT'}</small><strong>{lang === 'tr' ? 'Birlikte yeni bir çizgi açalım.' : 'Let’s begin a new line together.'}</strong><span aria-hidden="true"><i/><ArrowUpRight/></span></a><div className="footer-social-compact"><p>{lang === 'tr' ? 'Bizi takip edin' : 'Follow us'}</p><div aria-label={lang === 'tr' ? 'Sosyal medya' : 'Social media'}>{socials.map(item => item.url ? <a className="footer-social-chip" key={item.label} href={item.url} target="_blank" rel="noreferrer" aria-label={item.label}><span>{item.icon}</span><b>{item.label}</b></a> : <span className="footer-social-chip is-disabled" key={item.label} aria-disabled="true"><span>{item.icon}</span><b>{item.label}</b></span>)}</div></div></div><div className="footer-floor"><span>© {new Date().getFullYear()} {c.name}</span><button onClick={openPrivacy}>{c.privacy}</button><a href="#top">{c.backTop}<ArrowUp size={15}/></a></div></footer>;
 }
 export function YouthSite({ lang, page }: { lang: Language; page?: PageKey }) {
   const c = content[lang];
   const [allowed,setAllowed]=useState(() => { try { return typeof window !== 'undefined' && localStorage.getItem('living-line-social')==='allowed'; } catch { return false; } }); const [privacy,setPrivacy]=useState(false);
   useEffect(()=> { document.documentElement.lang=lang; try { localStorage.setItem('living-line-language', lang); } catch {} },[lang]);
   const toggleConsent=()=>setAllowed(previous=> {const next=!previous; try{localStorage.setItem('living-line-social',next?'allowed':'blocked');}catch{} return next;});
-  return <div id="top" className="site-shell"><PageTransition lang={lang}/><Header c={c} lang={lang} page={page}/><main id="main" tabIndex={-1}>{page ? <Detail page={page} lang={lang} c={c}/> : <><Story c={c} lang={lang}/><WhoWeAre lang={lang}/><StatsBar lang={lang}/><ProgramsShowcase lang={lang}/></>}</main><Footer c={c} lang={lang} openPrivacy={()=>setPrivacy(true)}/><Dialog open={privacy} onOpenChange={setPrivacy}><DialogContent className="privacy-dialog" showCloseButton={false}><div className="privacy-heading"><Mark/><Button variant="ghost" size="icon" aria-label={c.close} onClick={()=>setPrivacy(false)}><X/></Button></div><DialogTitle>{c.privacyTitle}</DialogTitle><DialogDescription>{c.privacyText}</DialogDescription><p role="status" className="privacy-status">{allowed ? c.privacyAllowed : c.privacyBlocked}</p><Button className="primary-action" onClick={toggleConsent}>{allowed ? c.socialRevoke : c.socialConsent}</Button></DialogContent></Dialog></div>;
+  return <div id="top" className="site-shell"><PageTransition lang={lang}/><Header c={c} lang={lang} page={page}/><main id="main" tabIndex={-1}>{page ? <Detail page={page} lang={lang} c={c}/> : <><Story c={c} lang={lang}/><LivingContinuum><WhoWeAre lang={lang}/><StatsBar lang={lang}/><ProgramsShowcase lang={lang}/></LivingContinuum></>}</main><Footer c={c} lang={lang} openPrivacy={()=>setPrivacy(true)}/><Dialog open={privacy} onOpenChange={setPrivacy}><DialogContent className="privacy-dialog" showCloseButton={false}><div className="privacy-heading"><Mark/><Button variant="ghost" size="icon" aria-label={c.close} onClick={()=>setPrivacy(false)}><X/></Button></div><DialogTitle>{c.privacyTitle}</DialogTitle><DialogDescription>{c.privacyText}</DialogDescription><p role="status" className="privacy-status">{allowed ? c.privacyAllowed : c.privacyBlocked}</p><Button className="primary-action" onClick={toggleConsent}>{allowed ? c.socialRevoke : c.socialConsent}</Button></DialogContent></Dialog></div>;
 }
