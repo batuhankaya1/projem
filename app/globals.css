@@ -309,6 +309,24 @@
   .index-identity h2{margin-top:8px;font-size:clamp(19px,5.7vw,23px)}
   .index-footer{left:22px;right:22px}
 }
+@media(max-height:430px) and (min-width:480px) and (max-width:720px){
+  .route-menu-head{height:54px;padding:5px 22px}
+  .route-menu-brand .brand-logo-image{height:40px}
+  .route-menu-close{padding:3px 5px 3px 13px}
+  .route-menu-close svg{width:28px;height:28px;padding:8px}
+  .corporate-index{inset:54px 22px 38px;grid-template-columns:minmax(170px,.8fr) minmax(240px,1.2fr);grid-template-rows:1fr}
+  .index-identity{justify-content:center;padding:16px 18px 12px 0;border-right:1px solid #667c70;border-bottom:0}
+  .index-kicker{top:7px;font-size:8px}
+  .index-vision{font-size:clamp(42px,10vh,52px)}
+  .index-identity h2{margin-top:8px;font-size:clamp(17px,4.6vh,20px)}
+  .index-navigation{padding-left:18px}
+  .index-row{grid-template-columns:30px 1fr 24px}
+  .index-number{padding-top:9px;font-size:8px}
+  .index-label strong{font-size:clamp(17px,4.6vh,20px)}
+  .index-row>svg{width:16px;height:16px}
+  .index-footer{left:22px;right:22px;height:38px}
+  .index-footer .route-language a{width:30px;height:30px}
+}
 @media(prefers-reduced-motion:reduce){.index-vision,.index-row{animation:none}}
 
 /* Homepage continuation: metrics, programmes and institutional footer */
