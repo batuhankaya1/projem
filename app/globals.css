@@ -714,11 +714,11 @@
 /* Primary Projem logo */
 .brand-logo-image{display:block;width:auto;height:56px;object-fit:contain}
 .route-brand{padding:0;background:transparent;border-color:transparent;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
-.route-brand .brand-logo-image{width:168px;height:auto}
+.route-brand .brand-logo-image{width:152px;height:auto}
 .route-header .route-brand{transition:padding .28s ease}
 .route-header .route-brand .brand-logo-image{transition:width .28s ease}
 .route-header-scrolled .route-brand{padding:0;background:transparent;border-color:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
-.route-header-scrolled .route-brand .brand-logo-image{width:150px;height:auto}
+.route-header-scrolled .route-brand .brand-logo-image{width:138px;height:auto}
 .route-menu-brand{padding:7px 13px;background:transparent;border-radius:3px}
 .route-menu-brand .brand-logo-image{height:60px}
 .route-menu-brand .brand-logo-image,.footer-brand .brand-logo-image{filter:brightness(0) invert(1)}
@@ -727,17 +727,17 @@
 .language-entry-logo{display:block;width:min(430px,80vw);height:auto}
 @media(max-width:620px){
   .route-brand{padding:0}
-  .route-brand .brand-logo-image{width:118px;height:auto}
+  .route-brand .brand-logo-image{width:112px;height:auto}
   .route-header-scrolled .route-brand{padding:0}
-  .route-header-scrolled .route-brand .brand-logo-image{width:108px;height:auto}
+  .route-header-scrolled .route-brand .brand-logo-image{width:104px;height:auto}
   .route-menu-brand{padding:5px 8px}
   .route-menu-brand .brand-logo-image{height:46px}
   .footer-brand .brand-logo-image{height:58px}
 }
 @media(max-width:360px){
   .route-header{padding-left:9px}
-  .route-brand .brand-logo-image{width:108px;height:auto}
-  .route-header-scrolled .route-brand .brand-logo-image{width:100px;height:auto}
+  .route-brand .brand-logo-image{width:104px;height:auto}
+  .route-header-scrolled .route-brand .brand-logo-image{width:98px;height:auto}
   .route-language-quick,.route-menu-trigger,.route-menu-icon{width:44px;height:44px}
   .route-language-quick>span{width:36px;height:36px}
   .route-header-scrolled .route-language-quick,.route-header-scrolled .route-menu-trigger,.route-header-scrolled .route-menu-icon{width:42px;height:42px}
